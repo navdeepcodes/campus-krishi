@@ -1,10 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function SignupPage() {
-  const [email, setEmail] = useState("");
+  const router = useRouter();
+
+  const [email, setEmail] =
+    useState("");
+
   const [password, setPassword] =
     useState("");
 
@@ -32,84 +37,117 @@ export default function SignupPage() {
       return;
     }
 
-    alert("Account created successfully ✅");
+    alert(
+      "Account created successfully 🌱"
+    );
 
     window.location.href = "/";
   }
 
   return (
-    <div
+    <main
       style={{
         minHeight: "100vh",
+        background:
+          "linear-gradient(135deg,#dcfce7,#f0fdf4,#f3f4f6)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f3f4f6",
+        padding: "40px",
+        fontFamily:
+          "Inter, Arial, sans-serif",
       }}
     >
       <div
         style={{
+          width: "460px",
           backgroundColor: "white",
+          borderRadius: "30px",
           padding: "50px",
-          borderRadius: "24px",
-          width: "420px",
+          boxShadow:
+            "0 20px 50px rgba(0,0,0,0.08)",
         }}
       >
-        <h1
+        {/* TOP */}
+        <div
           style={{
-            fontSize: "48px",
-            fontWeight: "bold",
-            marginBottom: "10px",
-            color: "#16a34a",
+            textAlign: "center",
+            marginBottom: "40px",
           }}
         >
-          Sign Up 🌱
-        </h1>
+          <div
+            style={{
+              fontSize: "70px",
+              marginBottom: "10px",
+            }}
+          >
+            🌱
+          </div>
 
-        <p
-          style={{
-            fontSize: "18px",
-            color: "#6b7280",
-            marginBottom: "30px",
-          }}
-        >
-          Create your Campus Krishi account
-        </p>
+          <h1
+            style={{
+              fontSize: "50px",
+              fontWeight: "800",
+              color: "#16a34a",
+              marginBottom: "10px",
+            }}
+          >
+            Create Account
+          </h1>
 
+          <p
+            style={{
+              color: "#6b7280",
+              fontSize: "18px",
+              lineHeight: "1.7",
+            }}
+          >
+            Join Campus Krishi and
+            explore sustainable farming
+          </p>
+        </div>
+
+        {/* FORM */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "20px",
+            gap: "22px",
           }}
         >
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) =>
               setEmail(e.target.value)
             }
             style={{
               padding: "18px",
-              borderRadius: "14px",
-              border: "2px solid #d1d5db",
-              fontSize: "18px",
+              borderRadius: "16px",
+              border:
+                "2px solid #d1d5db",
+              fontSize: "16px",
+              outline: "none",
             }}
           />
 
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Create password"
             value={password}
             onChange={(e) =>
-              setPassword(e.target.value)
+              setPassword(
+                e.target.value
+              )
             }
             style={{
               padding: "18px",
-              borderRadius: "14px",
-              border: "2px solid #d1d5db",
-              fontSize: "18px",
+              borderRadius: "16px",
+              border:
+                "2px solid #d1d5db",
+              fontSize: "16px",
+              outline: "none",
             }}
           />
 
@@ -117,42 +155,50 @@ export default function SignupPage() {
             onClick={handleSignup}
             disabled={loading}
             style={{
-              backgroundColor: "#16a34a",
+              background:
+                "linear-gradient(to right,#16a34a,#22c55e)",
               color: "white",
               border: "none",
               padding: "18px",
-              borderRadius: "14px",
-              fontSize: "20px",
-              fontWeight: "bold",
+              borderRadius: "16px",
+              fontSize: "18px",
+              fontWeight: "800",
               cursor: "pointer",
+              boxShadow:
+                "0 10px 24px rgba(34,197,94,0.25)",
             }}
           >
             {loading
               ? "Creating..."
               : "Create Account"}
           </button>
+        </div>
 
-          <button
+        {/* BOTTOM */}
+        <div
+          style={{
+            marginTop: "30px",
+            textAlign: "center",
+            color: "#6b7280",
+            fontSize: "16px",
+          }}
+        >
+          Already have an account?{" "}
+
+          <span
             onClick={() =>
-              (window.location.href =
-                "/login")
+              router.push("/login")
             }
             style={{
-              backgroundColor: "white",
               color: "#16a34a",
-              border:
-                "2px solid #16a34a",
-              padding: "18px",
-              borderRadius: "14px",
-              fontSize: "18px",
-              fontWeight: "bold",
+              fontWeight: "800",
               cursor: "pointer",
             }}
           >
-            Go to Login
-          </button>
+            Login
+          </span>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

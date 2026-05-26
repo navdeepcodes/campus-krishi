@@ -35,6 +35,9 @@ export default function HomePage() {
   const [search, setSearch] =
     useState("");
 
+  const [loading, setLoading] =
+    useState(true);
+
   const adminEmails = [
     "navdeeptrox@gmail.com",
   ];
@@ -49,12 +52,9 @@ export default function HomePage() {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user) {
-      window.location.href = "/login";
-      return;
-    }
+    setUser(user || null);
 
-    setUser(user);
+    setLoading(false);
   }
 
   async function fetchProducts() {
@@ -73,10 +73,22 @@ export default function HomePage() {
   async function logout() {
     await supabase.auth.signOut();
 
-    window.location.href = "/login";
+    alert("Logged out successfully 🌱");
+
+    window.location.href = "/";
   }
 
   function addToCart(product: any) {
+    if (!user) {
+      alert(
+        "Please login to add items to cart 🌱"
+      );
+
+      window.location.href = "/login";
+
+      return;
+    }
+
     const existingIndex = cart.findIndex(
       (item) => item.id === product.id
     );
@@ -127,8 +139,19 @@ export default function HomePage() {
   }
 
   function placeOrder() {
+    if (!user) {
+      alert(
+        "Please login to continue checkout 🌱"
+      );
+
+      window.location.href = "/login";
+
+      return;
+    }
+
     if (cart.length === 0) {
       alert("Cart is empty");
+
       return;
     }
 
@@ -146,12 +169,32 @@ export default function HomePage() {
     user &&
     adminEmails.includes(user.email);
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "28px",
+          fontWeight: "700",
+          color: "#15803d",
+          background:
+            "linear-gradient(to bottom,#f8fafc,#f1f5f9)",
+        }}
+      >
+        🌱 Loading Campus Krishi...
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
         minHeight: "100vh",
         background:
-          "linear-gradient(to bottom,#f8fafc,#f1f5f9)",
+          "linear-gradient(to bottom,#f8fafc,#eefbf3)",
         fontFamily:
           "Inter, Arial, sans-serif",
       }}
@@ -168,22 +211,23 @@ export default function HomePage() {
       {/* HOME PAGE */}
       {currentPage === "home" && (
         <div>
-          {/* HERO */}
+          {/* HERO SECTION */}
           <div
             style={{
               background:
                 "linear-gradient(135deg,#14532d,#22c55e)",
-              minHeight: "460px",
+              minHeight: "520px",
               display: "flex",
               justifyContent:
                 "space-between",
               alignItems: "center",
-              padding: "80px",
+              padding: "90px 80px",
               color: "white",
               position: "relative",
               overflow: "hidden",
             }}
           >
+            {/* BACKGROUND CIRCLES */}
             <div
               style={{
                 position: "absolute",
@@ -191,16 +235,29 @@ export default function HomePage() {
                 height: "500px",
                 borderRadius: "50%",
                 background:
-                  "rgba(255,255,255,0.08)",
+                  "rgba(255,255,255,0.07)",
                 top: "-180px",
-                right: "-100px",
+                right: "-120px",
+              }}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                width: "300px",
+                height: "300px",
+                borderRadius: "50%",
+                background:
+                  "rgba(255,255,255,0.05)",
+                bottom: "-120px",
+                left: "-60px",
               }}
             />
 
             {/* LEFT */}
             <div
               style={{
-                maxWidth: "650px",
+                maxWidth: "700px",
                 zIndex: 2,
               }}
             >
@@ -208,10 +265,10 @@ export default function HomePage() {
                 style={{
                   backgroundColor:
                     "rgba(255,255,255,0.15)",
-                  padding: "10px 18px",
+                  padding: "12px 20px",
                   borderRadius: "999px",
                   display: "inline-block",
-                  marginBottom: "24px",
+                  marginBottom: "28px",
                   fontSize: "14px",
                   fontWeight: "700",
                   backdropFilter:
@@ -224,10 +281,10 @@ export default function HomePage() {
 
               <h1
                 style={{
-                  fontSize: "68px",
+                  fontSize: "74px",
                   fontWeight: "900",
-                  lineHeight: "1.02",
-                  marginBottom: "24px",
+                  lineHeight: "1",
+                  marginBottom: "26px",
                 }}
               >
                 Campus Krishi
@@ -237,18 +294,19 @@ export default function HomePage() {
 
               <p
                 style={{
-                  fontSize: "19px",
+                  fontSize: "20px",
                   lineHeight: "1.9",
-                  marginBottom: "36px",
-                  opacity: 0.96,
+                  opacity: 0.95,
+                  marginBottom: "40px",
+                  maxWidth: "620px",
                 }}
               >
-                A student-led living lab
-                focused on sustainable
-                farming, climate
-                resilience, fresh organic
-                produce, and community
-                innovation.
+                Fresh organic produce,
+                sustainable farming,
+                student innovation, and
+                climate-conscious
+                agriculture — all grown
+                directly inside campus.
               </p>
 
               <div
@@ -270,7 +328,7 @@ export default function HomePage() {
                     color: "#166534",
                     border: "none",
                     padding:
-                      "16px 30px",
+                      "18px 34px",
                     borderRadius:
                       "18px",
                     fontWeight: "800",
@@ -280,7 +338,7 @@ export default function HomePage() {
                       "0 10px 24px rgba(0,0,0,0.15)",
                   }}
                 >
-                  🌱 Learn More
+                  🌿 Explore Vision
                 </button>
 
                 <button
@@ -291,23 +349,45 @@ export default function HomePage() {
                   }
                   style={{
                     backgroundColor:
-                      "rgba(255,255,255,0.08)",
-                    border:
-                      "2px solid rgba(255,255,255,0.6)",
+                      "transparent",
                     color: "white",
+                    border:
+                      "2px solid rgba(255,255,255,0.7)",
                     padding:
-                      "16px 30px",
+                      "18px 34px",
                     borderRadius:
                       "18px",
                     fontWeight: "800",
                     fontSize: "15px",
                     cursor: "pointer",
-                    backdropFilter:
-                      "blur(10px)",
                   }}
                 >
-                  Our Process
+                  Learn Our Process
                 </button>
+
+                {!user && (
+                  <button
+                    onClick={() =>
+                      (window.location.href =
+                        "/signup")
+                    }
+                    style={{
+                      backgroundColor:
+                        "#111827",
+                      color: "white",
+                      border: "none",
+                      padding:
+                        "18px 34px",
+                      borderRadius:
+                        "18px",
+                      fontWeight: "800",
+                      fontSize: "15px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Create Account
+                  </button>
+                )}
 
                 {isAdmin && (
                   <button
@@ -322,7 +402,7 @@ export default function HomePage() {
                       color: "white",
                       border: "none",
                       padding:
-                        "16px 30px",
+                        "18px 34px",
                       borderRadius:
                         "18px",
                       fontWeight: "800",
@@ -339,8 +419,10 @@ export default function HomePage() {
             {/* RIGHT */}
             <div
               style={{
-                fontSize: "150px",
+                fontSize: "170px",
                 zIndex: 2,
+                filter:
+                  "drop-shadow(0 12px 20px rgba(0,0,0,0.2))",
               }}
             >
               🌿
@@ -352,10 +434,10 @@ export default function HomePage() {
             style={{
               maxWidth: "1450px",
               margin: "0 auto",
-              padding: "70px 40px",
+              padding: "80px 40px",
             }}
           >
-            {/* PRODUCTS FIRST */}
+            {/* PRODUCTS */}
             <div
               style={{
                 marginBottom: "100px",
@@ -364,7 +446,7 @@ export default function HomePage() {
               <div
                 style={{
                   textAlign: "center",
-                  marginBottom: "45px",
+                  marginBottom: "50px",
                 }}
               >
                 <div
@@ -378,18 +460,18 @@ export default function HomePage() {
                       "999px",
                     fontWeight: "700",
                     fontSize: "14px",
-                    marginBottom: "20px",
+                    marginBottom: "22px",
                   }}
                 >
-                  🥬 Fresh From Farm
+                  🥬 Fresh Organic Produce
                 </div>
 
                 <h1
                   style={{
-                    fontSize: "52px",
+                    fontSize: "54px",
                     fontWeight: "900",
                     color: "#111827",
-                    marginBottom: "14px",
+                    marginBottom: "16px",
                   }}
                 >
                   Today's Fresh
@@ -403,8 +485,10 @@ export default function HomePage() {
                     lineHeight: "1.8",
                   }}
                 >
-                  Freshly harvested from
-                  our campus organic farm
+                  Naturally grown and
+                  freshly harvested from
+                  our sustainable campus
+                  farm.
                 </p>
               </div>
 
@@ -414,7 +498,7 @@ export default function HomePage() {
                   display: "flex",
                   justifyContent:
                     "center",
-                  marginBottom: "45px",
+                  marginBottom: "50px",
                 }}
               >
                 <input
@@ -427,7 +511,7 @@ export default function HomePage() {
                     )
                   }
                   style={{
-                    width: "460px",
+                    width: "500px",
                     padding:
                       "18px 22px",
                     borderRadius:
@@ -439,7 +523,7 @@ export default function HomePage() {
                     backgroundColor:
                       "white",
                     boxShadow:
-                      "0 10px 25px rgba(0,0,0,0.06)",
+                      "0 12px 24px rgba(0,0,0,0.06)",
                   }}
                 />
               </div>
@@ -450,7 +534,7 @@ export default function HomePage() {
                   display: "grid",
                   gridTemplateColumns:
                     "repeat(auto-fit,minmax(280px,1fr))",
-                  gap: "28px",
+                  gap: "30px",
                 }}
               >
                 {filteredProducts.map(
@@ -471,8 +555,8 @@ export default function HomePage() {
                           : "https://via.placeholder.com/300x300?text=Vegetable"
                       }
                       addToCart={(
-                        item,
-                        quantity
+                        item: any,
+                        quantity: number
                       ) =>
                         addToCart({
                           ...item,
@@ -485,463 +569,96 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* WHAT WE DO */}
+            {/* INFO CARDS */}
             <div
               style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit,minmax(320px,1fr))",
+                gap: "28px",
                 marginBottom: "100px",
               }}
             >
-              <h1
-                style={{
-                  textAlign: "center",
-                  fontSize: "48px",
-                  fontWeight: "900",
-                  color: "#111827",
-                  marginBottom: "18px",
-                }}
-              >
-                What We Do
-              </h1>
-
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "#6b7280",
-                  maxWidth: "850px",
-                  margin:
-                    "0 auto 60px auto",
-                  lineHeight: "1.9",
-                  fontSize: "17px",
-                }}
-              >
-                Campus Krishi combines
-                sustainable agriculture,
-                innovation, and community
-                participation to build a
-                greener and healthier
-                future.
-              </p>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "repeat(auto-fit,minmax(320px,1fr))",
-                  gap: "28px",
-                }}
-              >
-                {[
-                  {
-                    icon: "🌱",
-                    title:
-                      "Sustainable Campus Farming",
-                    desc:
-                      "Hands-on organic farming with climate-resilient methods and multiple growing cycles.",
-                  },
-
-                  {
-                    icon: "👨‍🎓",
-                    title:
-                      "Student Innovation",
-                    desc:
-                      "Students gain practical sustainability and agricultural experience through live projects.",
-                  },
-
-                  {
-                    icon: "🤝",
-                    title:
-                      "Community Engagement",
-                    desc:
-                      "Volunteer initiatives and collaborative programs that foster awareness and innovation.",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      backgroundColor:
-                        "white",
-                      padding: "40px",
-                      borderRadius:
-                        "30px",
-                      boxShadow:
-                        "0 12px 35px rgba(0,0,0,0.05)",
-                      textAlign:
-                        "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "60px",
-                        marginBottom:
-                          "20px",
-                      }}
-                    >
-                      {item.icon}
-                    </div>
-
-                    <h2
-                      style={{
-                        fontSize: "26px",
-                        fontWeight:
-                          "800",
-                        color:
-                          "#111827",
-                        marginBottom:
-                          "16px",
-                      }}
-                    >
-                      {item.title}
-                    </h2>
-
-                    <p
-                      style={{
-                        color:
-                          "#6b7280",
-                        lineHeight:
-                          "1.9",
-                        fontSize:
-                          "15px",
-                      }}
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* CURRENT CROPS */}
-            <div
-              style={{
-                marginBottom: "100px",
-              }}
-            >
-              <h1
-                style={{
-                  textAlign: "center",
-                  fontSize: "48px",
-                  fontWeight: "900",
-                  marginBottom: "55px",
-                  color: "#111827",
-                }}
-              >
-                Current Crops &
-                Practices
-              </h1>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "1fr 1fr",
-                  gap: "30px",
-                }}
-              >
+              {[
+                {
+                  icon: "🌱",
+                  title:
+                    "Sustainable Farming",
+                  desc:
+                    "Organic farming methods with climate-resilient agricultural practices.",
+                },
+                {
+                  icon: "👨‍🎓",
+                  title:
+                    "Student Innovation",
+                  desc:
+                    "Hands-on learning opportunities through live sustainability projects.",
+                },
+                {
+                  icon: "🤝",
+                  title:
+                    "Community Impact",
+                  desc:
+                    "Building awareness and collaboration for a greener future.",
+                },
+              ].map((item, index) => (
                 <div
+                  key={index}
                   style={{
                     backgroundColor:
                       "white",
+                    padding: "40px",
                     borderRadius:
-                      "28px",
-                    padding: "38px",
+                      "30px",
                     boxShadow:
                       "0 12px 35px rgba(0,0,0,0.05)",
+                    textAlign:
+                      "center",
                   }}
                 >
-                  <h2
-                    style={{
-                      color: "#15803d",
-                      fontSize: "32px",
-                      fontWeight:
-                        "900",
-                      marginBottom:
-                        "24px",
-                    }}
-                  >
-                    🌿 Current Crops
-                  </h2>
-
-                  <ul
-                    style={{
-                      lineHeight:
-                        "2.2",
-                      color: "#374151",
-                      fontSize:
-                        "17px",
-                    }}
-                  >
-                    <li>Tomatoes</li>
-                    <li>Brinjal</li>
-                    <li>Beans</li>
-                    <li>Spinach</li>
-                    <li>Banana</li>
-                    <li>Chillies</li>
-                  </ul>
-                </div>
-
-                <div
-                  style={{
-                    backgroundColor:
-                      "white",
-                    borderRadius:
-                      "28px",
-                    padding: "38px",
-                    boxShadow:
-                      "0 12px 35px rgba(0,0,0,0.05)",
-                  }}
-                >
-                  <h2
-                    style={{
-                      color: "#15803d",
-                      fontSize: "32px",
-                      fontWeight:
-                        "900",
-                      marginBottom:
-                        "24px",
-                    }}
-                  >
-                    💧 Practices
-                    Adopted
-                  </h2>
-
-                  <ul
-                    style={{
-                      lineHeight:
-                        "2.2",
-                      color: "#374151",
-                      fontSize:
-                        "17px",
-                    }}
-                  >
-                    <li>
-                      Composting facility
-                    </li>
-                    <li>
-                      Drip irrigation
-                    </li>
-                    <li>
-                      Organic pest
-                      control
-                    </li>
-                    <li>
-                      Climate resilient
-                      farming
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* COMMUNITY IMPACT */}
-            <div
-              style={{
-                marginBottom: "100px",
-              }}
-            >
-              <h1
-                style={{
-                  textAlign: "center",
-                  fontSize: "48px",
-                  fontWeight: "900",
-                  color: "#111827",
-                  marginBottom: "60px",
-                }}
-              >
-                Community Impact
-              </h1>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "repeat(auto-fit,minmax(300px,1fr))",
-                  gap: "28px",
-                }}
-              >
-                {[
-                  {
-                    icon: "❤️",
-                    title:
-                      "Student Learning",
-                    desc:
-                      "Hands-on sustainability projects for engineering and environmental students.",
-                  },
-
-                  {
-                    icon: "🌱",
-                    title:
-                      "Climate Resilience",
-                    desc:
-                      "Practices designed to build resilience against drought and urban stress.",
-                  },
-
-                  {
-                    icon: "👥",
-                    title:
-                      "Community Engagement",
-                    desc:
-                      "Volunteer workshops and collaborative sustainability innovation.",
-                  },
-                ].map((item, index) => (
                   <div
-                    key={index}
                     style={{
-                      backgroundColor:
-                        "white",
-                      padding: "36px",
-                      borderRadius:
-                        "28px",
-                      boxShadow:
-                        "0 12px 35px rgba(0,0,0,0.05)",
-                      textAlign:
-                        "center",
+                      fontSize: "60px",
+                      marginBottom:
+                        "20px",
                     }}
                   >
-                    <div
-                      style={{
-                        fontSize: "60px",
-                        marginBottom:
-                          "20px",
-                      }}
-                    >
-                      {item.icon}
-                    </div>
-
-                    <h2
-                      style={{
-                        fontSize: "25px",
-                        fontWeight:
-                          "900",
-                        marginBottom:
-                          "16px",
-                        color:
-                          "#111827",
-                      }}
-                    >
-                      {item.title}
-                    </h2>
-
-                    <p
-                      style={{
-                        color:
-                          "#6b7280",
-                        lineHeight:
-                          "1.9",
-                      }}
-                    >
-                      {item.desc}
-                    </p>
+                    {item.icon}
                   </div>
-                ))}
-              </div>
-            </div>
 
-            {/* JOIN SECTION */}
-            <div
-              style={{
-                background:
-                  "linear-gradient(135deg,#166534,#22c55e)",
-                borderRadius: "36px",
-                padding:
-                  "80px 40px",
-                textAlign: "center",
-                color: "white",
-                boxShadow:
-                  "0 20px 45px rgba(34,197,94,0.25)",
-              }}
-            >
-              <h1
-                style={{
-                  fontSize: "54px",
-                  fontWeight: "900",
-                  marginBottom: "24px",
-                }}
-              >
-                Join Campus Krishi 🌿
-              </h1>
+                  <h2
+                    style={{
+                      fontSize: "28px",
+                      fontWeight:
+                        "900",
+                      color: "#111827",
+                      marginBottom:
+                        "16px",
+                    }}
+                  >
+                    {item.title}
+                  </h2>
 
-              <p
-                style={{
-                  maxWidth: "900px",
-                  margin:
-                    "0 auto 38px auto",
-                  lineHeight: "2",
-                  fontSize: "18px",
-                  opacity: 0.96,
-                }}
-              >
-                Be part of a
-                student-led sustainability
-                movement promoting
-                innovation, organic
-                farming, climate action,
-                and collaborative
-                learning.
-              </p>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    "center",
-                  gap: "18px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <button
-                  onClick={() =>
-                    setCurrentPage(
-                      "process"
-                    )
-                  }
-                  style={{
-                    backgroundColor:
-                      "white",
-                    color: "#166534",
-                    border: "none",
-                    padding:
-                      "16px 32px",
-                    borderRadius:
-                      "18px",
-                    fontWeight: "900",
-                    fontSize: "15px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Learn Our Process
-                </button>
-
-                <button
-                  onClick={() =>
-                    setCurrentPage(
-                      "vision"
-                    )
-                  }
-                  style={{
-                    backgroundColor:
-                      "transparent",
-                    border:
-                      "2px solid rgba(255,255,255,0.8)",
-                    color: "white",
-                    padding:
-                      "16px 32px",
-                    borderRadius:
-                      "18px",
-                    fontWeight: "900",
-                    fontSize: "15px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Explore Vision
-                </button>
-              </div>
+                  <p
+                    style={{
+                      color:
+                        "#6b7280",
+                      lineHeight:
+                        "1.9",
+                      fontSize:
+                        "15px",
+                    }}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* FOOTER */}
           <footer
             style={{
-              marginTop: "90px",
               background:
                 "linear-gradient(135deg,#0f172a,#1e293b)",
               color: "white",
@@ -956,13 +673,13 @@ export default function HomePage() {
                 display: "grid",
                 gridTemplateColumns:
                   "repeat(auto-fit,minmax(250px,1fr))",
-                gap: "45px",
+                gap: "40px",
               }}
             >
               <div>
                 <h2
                   style={{
-                    fontSize: "32px",
+                    fontSize: "34px",
                     fontWeight: "900",
                     marginBottom:
                       "18px",
@@ -977,27 +694,25 @@ export default function HomePage() {
                       "#cbd5e1",
                     lineHeight:
                       "1.9",
-                    fontSize:
-                      "15px",
                   }}
                 >
-                  Providing fresh,
-                  nutritious produce and
-                  hands-on sustainability
-                  education.
+                  Sustainable farming,
+                  fresh produce, and
+                  student-driven climate
+                  innovation.
                 </p>
               </div>
 
               <div>
                 <h3
                   style={{
-                    fontSize: "24px",
+                    fontSize: "22px",
                     fontWeight: "800",
                     marginBottom:
                       "18px",
                   }}
                 >
-                  Quick Links
+                  Contact
                 </h3>
 
                 <div
@@ -1007,36 +722,6 @@ export default function HomePage() {
                       "column",
                     gap: "12px",
                     color: "#cbd5e1",
-                    fontSize: "15px",
-                  }}
-                >
-                  <span>Home</span>
-                  <span>About Us</span>
-                  <span>Vision</span>
-                  <span>Contact</span>
-                </div>
-              </div>
-
-              <div>
-                <h3
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: "800",
-                    marginBottom:
-                      "18px",
-                  }}
-                >
-                  Contact Info
-                </h3>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection:
-                      "column",
-                    gap: "14px",
-                    color: "#cbd5e1",
-                    fontSize: "15px",
                   }}
                 >
                   <span>
@@ -1069,7 +754,7 @@ export default function HomePage() {
         />
       )}
 
-      {/* CHECKOUT PAGE */}
+      {/* CHECKOUT */}
       {currentPage === "checkout" && (
         <CheckoutPage
           cart={cart}
@@ -1085,22 +770,22 @@ export default function HomePage() {
         />
       )}
 
-      {/* PROCESS PAGE */}
+      {/* PROCESS */}
       {currentPage === "process" && (
         <ProcessPage />
       )}
 
-      {/* ABOUT PAGE */}
+      {/* ABOUT */}
       {currentPage === "about" && (
         <AboutPage />
       )}
 
-      {/* VISION PAGE */}
+      {/* VISION */}
       {currentPage === "vision" && (
         <VisionPage />
       )}
 
-      {/* ADMIN PAGE */}
+      {/* ADMIN */}
       {currentPage === "admin" &&
         isAdmin && (
           <AdminDashboardPage
@@ -1124,7 +809,7 @@ export default function HomePage() {
           />
         )}
 
-      {/* PROFILE PAGE */}
+      {/* PROFILE */}
       {currentPage === "profile" && (
         <div
           style={{
@@ -1171,7 +856,8 @@ export default function HomePage() {
                 color: "#111827",
               }}
             >
-              {user?.email}
+              {user?.email ||
+                "Guest User"}
             </p>
 
             {isAdmin && (

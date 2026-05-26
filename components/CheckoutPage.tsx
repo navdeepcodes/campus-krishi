@@ -12,7 +12,10 @@ export default function CheckoutPage({
 }: any) {
   function placeFinalOrder() {
     if (!address) {
-      alert("Please enter address");
+      alert(
+        "Please enter delivery address 🌱"
+      );
+
       return;
     }
 
@@ -23,15 +26,16 @@ export default function CheckoutPage({
       date: new Date(),
     };
 
-    setOrders([...orders, newOrder]);
+    setOrders([
+      ...orders,
+      newOrder,
+    ]);
+
+    setCart([]);
 
     alert(
       "Order placed successfully 🌱"
     );
-
-    setCart([]);
-
-    localStorage.removeItem("cart");
 
     setCurrentPage("home");
   }
@@ -39,170 +43,376 @@ export default function CheckoutPage({
   return (
     <div
       style={{
-        minHeight: "100vh",
-        backgroundColor: "#f3f4f6",
-        padding: "50px",
-        fontFamily:
-          "Inter, Arial, sans-serif",
+        maxWidth: "1450px",
+        margin: "0 auto",
+        padding: "50px 40px",
       }}
     >
+      {/* HEADER */}
       <div
         style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          backgroundColor: "white",
-          borderRadius: "24px",
-          padding: "40px",
-          boxShadow:
-            "0 10px 30px rgba(0,0,0,0.06)",
+          marginBottom: "40px",
         }}
       >
-        <h1
-          style={{
-            fontSize: "42px",
-            fontWeight: "800",
-            marginBottom: "30px",
-            color: "#111827",
-          }}
-        >
-          💳 Checkout
-        </h1>
-
         <div
           style={{
-            marginBottom: "30px",
+            display: "inline-block",
+            background:
+              "#dcfce7",
+            color: "#166534",
+            padding: "10px 18px",
+            borderRadius:
+              "999px",
+            fontWeight: "700",
+            fontSize: "14px",
+            marginBottom: "18px",
           }}
         >
-          <h2
-            style={{
-              fontSize: "22px",
-              marginBottom: "14px",
-              fontWeight: "700",
-            }}
-          >
-            Delivery Address
-          </h2>
-
-          <textarea
-            placeholder="Enter your address..."
-            value={address}
-            onChange={(e) =>
-              setAddress(
-                e.target.value
-              )
-            }
-            style={{
-              width: "100%",
-              minHeight: "120px",
-              padding: "18px",
-              borderRadius: "16px",
-              border:
-                "1px solid #d1d5db",
-              fontSize: "16px",
-              outline: "none",
-              resize: "none",
-            }}
-          />
+          💳 Secure Checkout
         </div>
 
+        <h1
+          style={{
+            fontSize: "54px",
+            fontWeight: "900",
+            color: "#111827",
+            marginBottom: "12px",
+          }}
+        >
+          Checkout
+        </h1>
+
+        <p
+          style={{
+            color: "#6b7280",
+            fontSize: "18px",
+          }}
+        >
+          Complete your order for
+          fresh organic vegetables 🌱
+        </p>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "1.5fr 1fr",
+          gap: "30px",
+          alignItems: "start",
+        }}
+      >
+        {/* LEFT */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "28px",
+          }}
+        >
+          {/* DELIVERY */}
+          <div
+            style={{
+              backgroundColor:
+                "white",
+              borderRadius: "30px",
+              padding: "34px",
+              boxShadow:
+                "0 14px 40px rgba(0,0,0,0.05)",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "32px",
+                fontWeight: "900",
+                color: "#111827",
+                marginBottom: "24px",
+              }}
+            >
+              📍 Delivery Address
+            </h2>
+
+            <textarea
+              placeholder="Enter your full delivery address..."
+              value={address}
+              onChange={(e) =>
+                setAddress(
+                  e.target.value
+                )
+              }
+              style={{
+                width: "100%",
+                minHeight: "180px",
+                padding: "20px",
+                borderRadius:
+                  "20px",
+                border:
+                  "1px solid #d1d5db",
+                fontSize: "16px",
+                outline: "none",
+                resize: "none",
+                backgroundColor:
+                  "#f9fafb",
+                boxSizing:
+                  "border-box",
+              }}
+            />
+          </div>
+
+          {/* PAYMENT */}
+          <div
+            style={{
+              backgroundColor:
+                "white",
+              borderRadius: "30px",
+              padding: "34px",
+              boxShadow:
+                "0 14px 40px rgba(0,0,0,0.05)",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "32px",
+                fontWeight: "900",
+                color: "#111827",
+                marginBottom: "24px",
+              }}
+            >
+              💰 Payment Method
+            </h2>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection:
+                  "column",
+                gap: "18px",
+              }}
+            >
+              {[
+                "Cash on Delivery",
+                "UPI Payment",
+                "Card Payment",
+              ].map((method, index) => (
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor:
+                      "#f9fafb",
+                    border:
+                      "1px solid #e5e7eb",
+                    borderRadius:
+                      "18px",
+                    padding:
+                      "18px 20px",
+                    display: "flex",
+                    alignItems:
+                      "center",
+                    gap: "14px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "18px",
+                      height: "18px",
+                      borderRadius:
+                        "999px",
+                      backgroundColor:
+                        index === 0
+                          ? "#16a34a"
+                          : "#d1d5db",
+                    }}
+                  />
+
+                  <span
+                    style={{
+                      fontWeight:
+                        "700",
+                      color:
+                        "#111827",
+                    }}
+                  >
+                    {method}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT */}
         <div
           style={{
             backgroundColor:
-              "#f9fafb",
-            padding: "24px",
-            borderRadius: "18px",
-            marginBottom: "30px",
+              "white",
+            borderRadius: "30px",
+            padding: "32px",
+            boxShadow:
+              "0 14px 40px rgba(0,0,0,0.05)",
+            position: "sticky",
+            top: "110px",
           }}
         >
           <h2
             style={{
-              fontSize: "26px",
-              fontWeight: "700",
-              marginBottom: "20px",
+              fontSize: "34px",
+              fontWeight: "900",
+              color: "#111827",
+              marginBottom: "28px",
             }}
           >
             Order Summary
           </h2>
 
-          {cart.map(
-            (
-              item: any,
-              index: number
-            ) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    "space-between",
-                  marginBottom:
-                    "14px",
-                }}
-              >
-                <span>
-                  {item.name} ×{" "}
-                  {item.quantity}
-                </span>
-
-                <span>
-                  ₹
-                  {parseInt(
+          {/* ITEMS */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection:
+                "column",
+              gap: "18px",
+              marginBottom: "30px",
+            }}
+          >
+            {cart.map(
+              (
+                item: any,
+                index: number
+              ) => {
+                const price =
+                  parseInt(
                     String(
                       item.price
                     ).replace(
                       /[^\d]/g,
                       ""
                     )
-                  ) *
-                    item.quantity}
-                </span>
-              </div>
-            )
-          )}
+                  );
+
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      justifyContent:
+                        "space-between",
+                      alignItems:
+                        "center",
+                      gap: "12px",
+                    }}
+                  >
+                    <div>
+                      <h3
+                        style={{
+                          fontSize:
+                            "17px",
+                          fontWeight:
+                            "800",
+                          color:
+                            "#111827",
+                          marginBottom:
+                            "4px",
+                        }}
+                      >
+                        {item.name}
+                      </h3>
+
+                      <p
+                        style={{
+                          fontSize:
+                            "14px",
+                          color:
+                            "#6b7280",
+                        }}
+                      >
+                        Qty:{" "}
+                        {
+                          item.quantity
+                        }
+                      </p>
+                    </div>
+
+                    <span
+                      style={{
+                        fontWeight:
+                          "800",
+                        color:
+                          "#166534",
+                      }}
+                    >
+                      ₹
+                      {price *
+                        item.quantity}
+                    </span>
+                  </div>
+                );
+              }
+            )}
+          </div>
 
           <hr
             style={{
-              margin: "20px 0",
+              margin:
+                "26px 0",
+              border:
+                "1px solid #e5e7eb",
             }}
           />
 
+          {/* TOTAL */}
           <div
             style={{
               display: "flex",
               justifyContent:
                 "space-between",
-              fontSize: "28px",
-              fontWeight: "800",
-              color: "#15803d",
+              alignItems:
+                "center",
+              marginBottom: "30px",
             }}
           >
-            <span>Total</span>
+            <span
+              style={{
+                fontSize: "22px",
+                fontWeight: "900",
+                color: "#111827",
+              }}
+            >
+              Total
+            </span>
 
-            <span>
-              ₹ {getTotal()}
+            <span
+              style={{
+                fontSize: "38px",
+                fontWeight: "900",
+                color: "#166534",
+              }}
+            >
+              ₹{getTotal()}
             </span>
           </div>
-        </div>
 
-        <button
-          onClick={placeFinalOrder}
-          style={{
-            width: "100%",
-            background:
-              "linear-gradient(to right,#16a34a,#22c55e)",
-            color: "white",
-            border: "none",
-            padding: "18px",
-            borderRadius: "16px",
-            fontSize: "18px",
-            fontWeight: "800",
-            cursor: "pointer",
-            boxShadow:
-              "0 10px 24px rgba(34,197,94,0.25)",
-          }}
-        >
-          🌱 Place Order
-        </button>
+          {/* BUTTON */}
+          <button
+            onClick={placeFinalOrder}
+            style={{
+              width: "100%",
+              background:
+                "linear-gradient(135deg,#166534,#22c55e)",
+              color: "white",
+              border: "none",
+              padding: "20px",
+              borderRadius: "20px",
+              fontSize: "18px",
+              fontWeight: "900",
+              cursor: "pointer",
+              boxShadow:
+                "0 12px 24px rgba(34,197,94,0.25)",
+            }}
+          >
+            🌱 Place Order
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -84,8 +84,6 @@ export default function HomePage() {
         "Please login to add items to cart 🌱"
       );
 
-      window.location.href = "/login";
-
       return;
     }
 
@@ -144,14 +142,11 @@ export default function HomePage() {
         "Please login to continue checkout 🌱"
       );
 
-      window.location.href = "/login";
-
       return;
     }
 
     if (cart.length === 0) {
       alert("Cart is empty");
-
       return;
     }
 
@@ -177,14 +172,50 @@ export default function HomePage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          fontSize: "28px",
-          fontWeight: "700",
-          color: "#15803d",
           background:
-            "linear-gradient(to bottom,#f8fafc,#f1f5f9)",
+            "linear-gradient(to bottom,#f8fafc,#eefbf3)",
         }}
       >
-        🌱 Loading Campus Krishi...
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "40px 60px",
+            borderRadius: "30px",
+            boxShadow:
+              "0 16px 40px rgba(0,0,0,0.08)",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "60px",
+              marginBottom: "18px",
+            }}
+          >
+            🌱
+          </div>
+
+          <h1
+            style={{
+              fontSize: "32px",
+              color: "#166534",
+              marginBottom: "10px",
+              fontWeight: "900",
+            }}
+          >
+            Loading Campus Krishi
+          </h1>
+
+          <p
+            style={{
+              color: "#6b7280",
+              fontSize: "16px",
+            }}
+          >
+            Preparing fresh organic
+            experience...
+          </p>
+        </div>
       </div>
     );
   }
@@ -208,15 +239,15 @@ export default function HomePage() {
         cartCount={cart.length}
       />
 
-      {/* HOME PAGE */}
+      {/* HOME */}
       {currentPage === "home" && (
         <div>
-          {/* HERO SECTION */}
+          {/* HERO */}
           <div
             style={{
               background:
                 "linear-gradient(135deg,#14532d,#22c55e)",
-              minHeight: "520px",
+              minHeight: "560px",
               display: "flex",
               justifyContent:
                 "space-between",
@@ -227,7 +258,7 @@ export default function HomePage() {
               overflow: "hidden",
             }}
           >
-            {/* BACKGROUND CIRCLES */}
+            {/* BACKGROUND EFFECTS */}
             <div
               style={{
                 position: "absolute",
@@ -235,7 +266,7 @@ export default function HomePage() {
                 height: "500px",
                 borderRadius: "50%",
                 background:
-                  "rgba(255,255,255,0.07)",
+                  "rgba(255,255,255,0.06)",
                 top: "-180px",
                 right: "-120px",
               }}
@@ -244,13 +275,13 @@ export default function HomePage() {
             <div
               style={{
                 position: "absolute",
-                width: "300px",
-                height: "300px",
+                width: "280px",
+                height: "280px",
                 borderRadius: "50%",
                 background:
                   "rgba(255,255,255,0.05)",
-                bottom: "-120px",
-                left: "-60px",
+                bottom: "-100px",
+                left: "-80px",
               }}
             />
 
@@ -263,50 +294,48 @@ export default function HomePage() {
             >
               <div
                 style={{
-                  backgroundColor:
-                    "rgba(255,255,255,0.15)",
-                  padding: "12px 20px",
-                  borderRadius: "999px",
                   display: "inline-block",
+                  background:
+                    "rgba(255,255,255,0.15)",
+                  padding: "12px 22px",
+                  borderRadius: "999px",
                   marginBottom: "28px",
-                  fontSize: "14px",
-                  fontWeight: "700",
                   backdropFilter:
                     "blur(10px)",
+                  fontWeight: "700",
+                  fontSize: "14px",
                 }}
               >
-                🌱 Student-Led Organic
-                Farming Initiative
+                🌱 Sustainable Campus
+                Agriculture
               </div>
 
               <h1
                 style={{
-                  fontSize: "74px",
-                  fontWeight: "900",
+                  fontSize: "76px",
                   lineHeight: "1",
-                  marginBottom: "26px",
+                  fontWeight: "900",
+                  marginBottom: "28px",
                 }}
               >
                 Campus Krishi
-                <br />
-                Growing Sustainability
               </h1>
 
               <p
                 style={{
                   fontSize: "20px",
                   lineHeight: "1.9",
-                  opacity: 0.95,
-                  marginBottom: "40px",
                   maxWidth: "620px",
+                  marginBottom: "40px",
+                  opacity: 0.95,
                 }}
               >
                 Fresh organic produce,
-                sustainable farming,
-                student innovation, and
-                climate-conscious
-                agriculture — all grown
-                directly inside campus.
+                student-driven farming,
+                sustainability innovation,
+                and climate-conscious
+                agriculture directly from
+                campus farms.
               </p>
 
               <div
@@ -331,11 +360,11 @@ export default function HomePage() {
                       "18px 34px",
                     borderRadius:
                       "18px",
-                    fontWeight: "800",
-                    fontSize: "15px",
+                    fontWeight: "900",
                     cursor: "pointer",
+                    fontSize: "15px",
                     boxShadow:
-                      "0 10px 24px rgba(0,0,0,0.15)",
+                      "0 12px 28px rgba(0,0,0,0.18)",
                   }}
                 >
                   🌿 Explore Vision
@@ -348,7 +377,7 @@ export default function HomePage() {
                     )
                   }
                   style={{
-                    backgroundColor:
+                    background:
                       "transparent",
                     color: "white",
                     border:
@@ -357,12 +386,12 @@ export default function HomePage() {
                       "18px 34px",
                     borderRadius:
                       "18px",
-                    fontWeight: "800",
-                    fontSize: "15px",
+                    fontWeight: "900",
                     cursor: "pointer",
+                    fontSize: "15px",
                   }}
                 >
-                  Learn Our Process
+                  Learn Process
                 </button>
 
                 {!user && (
@@ -372,7 +401,7 @@ export default function HomePage() {
                         "/signup")
                     }
                     style={{
-                      backgroundColor:
+                      background:
                         "#111827",
                       color: "white",
                       border: "none",
@@ -380,9 +409,9 @@ export default function HomePage() {
                         "18px 34px",
                       borderRadius:
                         "18px",
-                      fontWeight: "800",
-                      fontSize: "15px",
+                      fontWeight: "900",
                       cursor: "pointer",
+                      fontSize: "15px",
                     }}
                   >
                     Create Account
@@ -397,17 +426,17 @@ export default function HomePage() {
                       )
                     }
                     style={{
-                      backgroundColor:
-                        "#111827",
+                      background:
+                        "linear-gradient(135deg,#111827,#374151)",
                       color: "white",
                       border: "none",
                       padding:
                         "18px 34px",
                       borderRadius:
                         "18px",
-                      fontWeight: "800",
-                      fontSize: "15px",
+                      fontWeight: "900",
                       cursor: "pointer",
+                      fontSize: "15px",
                     }}
                   >
                     👑 Admin Dashboard
@@ -419,7 +448,7 @@ export default function HomePage() {
             {/* RIGHT */}
             <div
               style={{
-                fontSize: "170px",
+                fontSize: "180px",
                 zIndex: 2,
                 filter:
                   "drop-shadow(0 12px 20px rgba(0,0,0,0.2))",
@@ -429,154 +458,145 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* MAIN CONTENT */}
+          {/* MAIN */}
           <div
             style={{
               maxWidth: "1450px",
               margin: "0 auto",
-              padding: "80px 40px",
+              padding: "90px 40px",
             }}
           >
-            {/* PRODUCTS */}
+            {/* HEADER */}
             <div
               style={{
-                marginBottom: "100px",
+                textAlign: "center",
+                marginBottom: "50px",
               }}
             >
               <div
                 style={{
-                  textAlign: "center",
-                  marginBottom: "50px",
+                  display: "inline-block",
+                  background:
+                    "#dcfce7",
+                  color: "#166534",
+                  padding: "10px 18px",
+                  borderRadius:
+                    "999px",
+                  fontWeight: "800",
+                  marginBottom: "24px",
                 }}
               >
-                <div
-                  style={{
-                    display: "inline-block",
-                    background:
-                      "#dcfce7",
-                    color: "#166534",
-                    padding: "10px 18px",
-                    borderRadius:
-                      "999px",
-                    fontWeight: "700",
-                    fontSize: "14px",
-                    marginBottom: "22px",
-                  }}
-                >
-                  🥬 Fresh Organic Produce
-                </div>
-
-                <h1
-                  style={{
-                    fontSize: "54px",
-                    fontWeight: "900",
-                    color: "#111827",
-                    marginBottom: "16px",
-                  }}
-                >
-                  Today's Fresh
-                  Vegetables
-                </h1>
-
-                <p
-                  style={{
-                    color: "#6b7280",
-                    fontSize: "18px",
-                    lineHeight: "1.8",
-                  }}
-                >
-                  Naturally grown and
-                  freshly harvested from
-                  our sustainable campus
-                  farm.
-                </p>
+                🥬 Fresh Organic Produce
               </div>
 
-              {/* SEARCH */}
-              <div
+              <h1
                 style={{
-                  display: "flex",
-                  justifyContent:
-                    "center",
-                  marginBottom: "50px",
+                  fontSize: "56px",
+                  fontWeight: "900",
+                  color: "#111827",
+                  marginBottom: "16px",
                 }}
               >
-                <input
-                  type="text"
-                  placeholder="Search vegetables..."
-                  value={search}
-                  onChange={(e) =>
-                    setSearch(
-                      e.target.value
-                    )
-                  }
-                  style={{
-                    width: "500px",
-                    padding:
-                      "18px 22px",
-                    borderRadius:
-                      "18px",
-                    border:
-                      "1px solid #d1d5db",
-                    fontSize: "16px",
-                    outline: "none",
-                    backgroundColor:
-                      "white",
-                    boxShadow:
-                      "0 12px 24px rgba(0,0,0,0.06)",
-                  }}
-                />
-              </div>
+                Today's Fresh Vegetables
+              </h1>
 
-              {/* PRODUCT GRID */}
-              <div
+              <p
                 style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "repeat(auto-fit,minmax(280px,1fr))",
-                  gap: "30px",
+                  fontSize: "18px",
+                  color: "#6b7280",
+                  lineHeight: "1.8",
                 }}
               >
-                {filteredProducts.map(
-                  (product) => (
-                    <ProductCard
-                      key={product.id}
-                      name={
-                        product.name
-                      }
-                      price={
-                        product.price
-                      }
-                      image={
-                        product.image &&
-                        product.image.trim() !==
-                          ""
-                          ? product.image
-                          : "https://via.placeholder.com/300x300?text=Vegetable"
-                      }
-                      addToCart={(
-                        item: any,
-                        quantity: number
-                      ) =>
-                        addToCart({
-                          ...item,
-                          quantity,
-                        })
-                      }
-                    />
-                  )
-                )}
-              </div>
+                Freshly harvested from
+                our sustainable campus
+                farms.
+              </p>
             </div>
 
-            {/* INFO CARDS */}
+            {/* SEARCH */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent:
+                  "center",
+                marginBottom: "60px",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search vegetables..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(
+                    e.target.value
+                  )
+                }
+                style={{
+                  width: "520px",
+                  padding:
+                    "18px 24px",
+                  borderRadius:
+                    "20px",
+                  border:
+                    "1px solid #d1d5db",
+                  outline: "none",
+                  fontSize: "16px",
+                  backgroundColor:
+                    "white",
+                  boxShadow:
+                    "0 12px 28px rgba(0,0,0,0.06)",
+                }}
+              />
+            </div>
+
+            {/* PRODUCTS */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns:
+                  "repeat(auto-fit,minmax(300px,1fr))",
+                gap: "30px",
+              }}
+            >
+              {filteredProducts.map(
+                (product) => (
+                  <ProductCard
+                    key={product.id}
+                    name={
+                      product.name
+                    }
+                    price={
+                      product.price
+                    }
+                    image={
+                      product.image &&
+                      product.image.trim() !==
+                        ""
+                        ? product.image
+                        : "https://via.placeholder.com/300x300?text=Vegetable"
+                    }
+                    addToCart={(
+                      item: any,
+                      quantity: number
+                    ) =>
+                      addToCart({
+                        ...item,
+                        quantity,
+                      })
+                    }
+                  />
+                )
+              )}
+            </div>
+
+            {/* FEATURES */}
+            <div
+              style={{
+                marginTop: "120px",
+                display: "grid",
+                gridTemplateColumns:
                   "repeat(auto-fit,minmax(320px,1fr))",
-                gap: "28px",
-                marginBottom: "100px",
+                gap: "30px",
               }}
             >
               {[
@@ -585,14 +605,14 @@ export default function HomePage() {
                   title:
                     "Sustainable Farming",
                   desc:
-                    "Organic farming methods with climate-resilient agricultural practices.",
+                    "Organic farming with climate-resilient agricultural methods.",
                 },
                 {
                   icon: "👨‍🎓",
                   title:
                     "Student Innovation",
                   desc:
-                    "Hands-on learning opportunities through live sustainability projects.",
+                    "Hands-on sustainability and agricultural innovation projects.",
                 },
                 {
                   icon: "🤝",
@@ -610,17 +630,17 @@ export default function HomePage() {
                     padding: "40px",
                     borderRadius:
                       "30px",
-                    boxShadow:
-                      "0 12px 35px rgba(0,0,0,0.05)",
                     textAlign:
                       "center",
+                    boxShadow:
+                      "0 14px 36px rgba(0,0,0,0.05)",
                   }}
                 >
                   <div
                     style={{
-                      fontSize: "60px",
+                      fontSize: "64px",
                       marginBottom:
-                        "20px",
+                        "22px",
                     }}
                   >
                     {item.icon}
@@ -631,9 +651,10 @@ export default function HomePage() {
                       fontSize: "28px",
                       fontWeight:
                         "900",
-                      color: "#111827",
+                      color:
+                        "#111827",
                       marginBottom:
-                        "16px",
+                        "14px",
                     }}
                   >
                     {item.title}
@@ -645,8 +666,6 @@ export default function HomePage() {
                         "#6b7280",
                       lineHeight:
                         "1.9",
-                      fontSize:
-                        "15px",
                     }}
                   >
                     {item.desc}
@@ -659,11 +678,12 @@ export default function HomePage() {
           {/* FOOTER */}
           <footer
             style={{
+              marginTop: "100px",
               background:
                 "linear-gradient(135deg,#0f172a,#1e293b)",
               color: "white",
               padding:
-                "60px 40px",
+                "70px 40px",
             }}
           >
             <div
@@ -706,7 +726,7 @@ export default function HomePage() {
               <div>
                 <h3
                   style={{
-                    fontSize: "22px",
+                    fontSize: "24px",
                     fontWeight: "800",
                     marginBottom:
                       "18px",
@@ -742,7 +762,7 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* CART PAGE */}
+      {/* CART */}
       {currentPage === "cart" && (
         <CartPage
           cart={cart}
@@ -770,17 +790,15 @@ export default function HomePage() {
         />
       )}
 
-      {/* PROCESS */}
+      {/* OTHER PAGES */}
       {currentPage === "process" && (
         <ProcessPage />
       )}
 
-      {/* ABOUT */}
       {currentPage === "about" && (
         <AboutPage />
       )}
 
-      {/* VISION */}
       {currentPage === "vision" && (
         <VisionPage />
       )}
@@ -815,69 +833,80 @@ export default function HomePage() {
           style={{
             maxWidth: "1200px",
             margin: "0 auto",
-            padding: "40px",
+            padding: "60px 40px",
           }}
         >
-          <h1
-            style={{
-              fontSize: "40px",
-              fontWeight: "900",
-              marginBottom: "24px",
-              color: "#111827",
-            }}
-          >
-            Profile 👤
-          </h1>
-
           <div
             style={{
               backgroundColor:
                 "white",
-              padding: "34px",
-              borderRadius: "24px",
+              padding: "40px",
+              borderRadius: "30px",
               boxShadow:
-                "0 10px 30px rgba(0,0,0,0.05)",
+                "0 14px 36px rgba(0,0,0,0.06)",
             }}
           >
-            <h2
+            <h1
               style={{
-                fontSize: "18px",
-                marginBottom: "12px",
-                color: "#374151",
-              }}
-            >
-              Logged in as:
-            </h2>
-
-            <p
-              style={{
-                fontSize: "18px",
-                fontWeight: "800",
+                fontSize: "42px",
+                fontWeight: "900",
                 color: "#111827",
+                marginBottom: "28px",
               }}
             >
-              {user?.email ||
-                "Guest User"}
-            </p>
+              👤 Profile
+            </h1>
+
+            <div
+              style={{
+                background:
+                  "#f0fdf4",
+                padding: "20px",
+                borderRadius: "20px",
+                border:
+                  "1px solid #bbf7d0",
+              }}
+            >
+              <p
+                style={{
+                  color: "#166534",
+                  fontWeight: "800",
+                  marginBottom: "8px",
+                }}
+              >
+                Logged in as
+              </p>
+
+              <h2
+                style={{
+                  fontSize: "20px",
+                  color: "#111827",
+                  fontWeight: "900",
+                }}
+              >
+                {user?.email ||
+                  "Guest User"}
+              </h2>
+            </div>
 
             {isAdmin && (
               <div
                 style={{
                   marginTop: "24px",
-                  backgroundColor:
-                    "#15803d",
+                  background:
+                    "linear-gradient(135deg,#166534,#22c55e)",
                   color: "white",
                   padding:
-                    "12px 20px",
+                    "14px 22px",
                   borderRadius:
-                    "14px",
+                    "16px",
                   display:
                     "inline-block",
                   fontWeight:
                     "900",
                 }}
               >
-                ADMIN ACCESS ENABLED 👑
+                👑 ADMIN ACCESS ENABLED
               </div>
             )}
           </div>

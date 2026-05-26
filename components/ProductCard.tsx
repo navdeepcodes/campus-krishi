@@ -11,6 +11,16 @@ export default function ProductCard({
   const [quantity, setQuantity] =
     useState(1);
 
+  function increaseQuantity() {
+    setQuantity(quantity + 1);
+  }
+
+  function decreaseQuantity() {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  }
+
   return (
     <div
       style={{
@@ -178,27 +188,28 @@ export default function ProductCard({
             </span>
           </div>
 
+          {/* QUANTITY BOX */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "14px",
-              backgroundColor: "#f8fafc",
-              padding: "14px",
+              gap: "10px",
+              backgroundColor:
+                "#f8fafc",
+              padding: "10px",
               borderRadius: "20px",
               border:
                 "1px solid #e5e7eb",
+              overflow: "hidden",
             }}
           >
             {/* MINUS */}
             <button
-              onClick={() =>
-                quantity > 1 &&
-                setQuantity(
-                  quantity - 1
-                )
+              onClick={
+                decreaseQuantity
               }
               style={{
+                minWidth: "46px",
                 width: "46px",
                 height: "46px",
                 borderRadius: "16px",
@@ -211,6 +222,7 @@ export default function ProductCard({
                 cursor: "pointer",
                 boxShadow:
                   "0 4px 12px rgba(0,0,0,0.06)",
+                flexShrink: 0,
               }}
             >
               −
@@ -235,28 +247,32 @@ export default function ProductCard({
               }
               style={{
                 flex: 1,
-                height: "48px",
-                borderRadius: "16px",
+                width: "100%",
+                minWidth: 0,
+                height: "46px",
+                borderRadius: "14px",
                 border:
                   "1px solid #d1d5db",
                 textAlign: "center",
-                fontSize: "20px",
+                fontSize: "18px",
                 fontWeight: "900",
                 outline: "none",
                 backgroundColor:
                   "white",
                 color: "#111827",
+                padding: "0 10px",
+                boxSizing:
+                  "border-box",
               }}
             />
 
             {/* PLUS */}
             <button
-              onClick={() =>
-                setQuantity(
-                  quantity + 1
-                )
+              onClick={
+                increaseQuantity
               }
               style={{
+                minWidth: "46px",
                 width: "46px",
                 height: "46px",
                 borderRadius: "16px",
@@ -269,6 +285,7 @@ export default function ProductCard({
                 cursor: "pointer",
                 boxShadow:
                   "0 10px 20px rgba(34,197,94,0.25)",
+                flexShrink: 0,
               }}
             >
               +

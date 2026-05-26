@@ -12,14 +12,16 @@ export default function Navbar({
     active: boolean
   ) => ({
     background: active
-      ? "#166534"
+      ? "linear-gradient(135deg,#166534,#22c55e)"
       : "transparent",
 
     color: active
       ? "white"
       : "#374151",
 
-    border: "none",
+    border: active
+      ? "none"
+      : "1px solid transparent",
 
     padding: "12px 18px",
 
@@ -31,7 +33,11 @@ export default function Navbar({
 
     cursor: "pointer",
 
-    transition: "0.2s",
+    transition: "all 0.25s ease",
+
+    boxShadow: active
+      ? "0 8px 20px rgba(34,197,94,0.25)"
+      : "none",
   });
 
   return (
@@ -41,15 +47,17 @@ export default function Navbar({
         top: 0,
         zIndex: 1000,
 
+        width: "100%",
+
         background:
-          "rgba(255,255,255,0.75)",
+          "rgba(255,255,255,0.82)",
 
         backdropFilter: "blur(18px)",
 
         borderBottom:
           "1px solid rgba(0,0,0,0.06)",
 
-        padding: "18px 40px",
+        padding: "18px 42px",
 
         display: "flex",
 
@@ -57,6 +65,8 @@ export default function Navbar({
           "space-between",
 
         alignItems: "center",
+
+        boxSizing: "border-box",
       }}
     >
       {/* LEFT */}
@@ -66,6 +76,7 @@ export default function Navbar({
           alignItems: "center",
           gap: "14px",
           cursor: "pointer",
+          flexShrink: 0,
         }}
         onClick={() =>
           setCurrentPage("home")
@@ -73,8 +84,8 @@ export default function Navbar({
       >
         <div
           style={{
-            width: "52px",
-            height: "52px",
+            width: "54px",
+            height: "54px",
             borderRadius: "18px",
 
             background:
@@ -104,7 +115,7 @@ export default function Navbar({
               fontSize: "24px",
               fontWeight: "900",
               color: "#111827",
-              marginBottom: "2px",
+              margin: 0,
             }}
           >
             Campus Krishi
@@ -114,6 +125,8 @@ export default function Navbar({
             style={{
               fontSize: "12px",
               color: "#6b7280",
+              margin: 0,
+              marginTop: "4px",
             }}
           >
             Sustainable Campus Farming
@@ -127,6 +140,18 @@ export default function Navbar({
           display: "flex",
           alignItems: "center",
           gap: "10px",
+
+          backgroundColor: "white",
+
+          padding: "8px",
+
+          borderRadius: "20px",
+
+          boxShadow:
+            "0 10px 25px rgba(0,0,0,0.05)",
+
+          border:
+            "1px solid rgba(0,0,0,0.04)",
         }}
       >
         <button
@@ -191,11 +216,11 @@ export default function Navbar({
             <span
               style={{
                 position: "absolute",
-                top: "-8px",
-                right: "-8px",
+                top: "-7px",
+                right: "-7px",
 
-                backgroundColor:
-                  "#ef4444",
+                background:
+                  "linear-gradient(135deg,#ef4444,#dc2626)",
 
                 color: "white",
 
@@ -215,6 +240,9 @@ export default function Navbar({
                   "center",
 
                 alignItems: "center",
+
+                boxShadow:
+                  "0 6px 14px rgba(239,68,68,0.35)",
               }}
             >
               {cartCount}
@@ -244,6 +272,9 @@ export default function Navbar({
               fontWeight: "800",
 
               cursor: "pointer",
+
+              boxShadow:
+                "0 10px 20px rgba(0,0,0,0.2)",
             }}
           >
             👑 Admin
@@ -257,6 +288,7 @@ export default function Navbar({
           display: "flex",
           alignItems: "center",
           gap: "14px",
+          flexShrink: 0,
         }}
       >
         {user ? (
@@ -273,7 +305,8 @@ export default function Navbar({
 
                 color: "#166534",
 
-                border: "none",
+                border:
+                  "1px solid #bbf7d0",
 
                 padding:
                   "12px 18px",
@@ -284,6 +317,9 @@ export default function Navbar({
                 fontWeight: "800",
 
                 cursor: "pointer",
+
+                transition:
+                  "all 0.2s ease",
               }}
             >
               👤 Profile
@@ -292,8 +328,8 @@ export default function Navbar({
             <button
               onClick={logout}
               style={{
-                backgroundColor:
-                  "#ef4444",
+                background:
+                  "linear-gradient(135deg,#ef4444,#dc2626)",
 
                 color: "white",
 
@@ -308,6 +344,9 @@ export default function Navbar({
                 fontWeight: "800",
 
                 cursor: "pointer",
+
+                boxShadow:
+                  "0 10px 22px rgba(239,68,68,0.22)",
               }}
             >
               Logout
@@ -330,7 +369,7 @@ export default function Navbar({
                   "1px solid #d1d5db",
 
                 padding:
-                  "12px 20px",
+                  "12px 22px",
 
                 borderRadius:
                   "14px",
@@ -338,6 +377,12 @@ export default function Navbar({
                 fontWeight: "800",
 
                 cursor: "pointer",
+
+                transition:
+                  "all 0.2s ease",
+
+                boxShadow:
+                  "0 6px 14px rgba(0,0,0,0.04)",
               }}
             >
               Login
@@ -357,7 +402,7 @@ export default function Navbar({
                 border: "none",
 
                 padding:
-                  "12px 20px",
+                  "12px 22px",
 
                 borderRadius:
                   "14px",

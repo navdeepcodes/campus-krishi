@@ -3,41 +3,43 @@
 export default function Navbar({
   currentPage,
   setCurrentPage,
-  user,
-  logout,
   isAdmin,
   cartCount,
 }: any) {
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.innerWidth < 768;
+
   const navButtonStyle = (
     active: boolean
   ) => ({
     background: active
-      ? "linear-gradient(135deg,#166534,#22c55e)"
+      ? "#16a34a"
       : "transparent",
 
     color: active
       ? "white"
       : "#374151",
 
-    border: active
-      ? "none"
-      : "1px solid transparent",
+    border: "none",
 
-    padding: "12px 18px",
+    padding: isMobile
+      ? "10px 14px"
+      : "12px 18px",
 
     borderRadius: "14px",
 
-    fontSize: "15px",
+    fontSize: isMobile
+      ? "13px"
+      : "15px",
 
-    fontWeight: "700",
+    fontWeight: "800",
 
     cursor: "pointer",
 
-    transition: "all 0.25s ease",
+    transition: "0.2s",
 
-    boxShadow: active
-      ? "0 8px 20px rgba(34,197,94,0.25)"
-      : "none",
+    whiteSpace: "nowrap",
   });
 
   return (
@@ -47,36 +49,39 @@ export default function Navbar({
         top: 0,
         zIndex: 1000,
 
-        width: "100%",
-
         background:
-          "rgba(255,255,255,0.82)",
+          "rgba(255,255,255,0.85)",
 
         backdropFilter: "blur(18px)",
 
         borderBottom:
           "1px solid rgba(0,0,0,0.06)",
 
-        padding: "18px 42px",
+        padding: isMobile
+          ? "14px 16px"
+          : "18px 40px",
 
         display: "flex",
+
+        flexDirection: isMobile
+          ? "column"
+          : "row",
+
+        gap: isMobile ? "16px" : "0",
 
         justifyContent:
           "space-between",
 
         alignItems: "center",
-
-        boxSizing: "border-box",
       }}
     >
-      {/* LEFT */}
+      {/* LOGO */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: "14px",
           cursor: "pointer",
-          flexShrink: 0,
         }}
         onClick={() =>
           setCurrentPage("home")
@@ -84,8 +89,14 @@ export default function Navbar({
       >
         <div
           style={{
-            width: "54px",
-            height: "54px",
+            width: isMobile
+              ? "48px"
+              : "56px",
+
+            height: isMobile
+              ? "48px"
+              : "56px",
+
             borderRadius: "18px",
 
             background:
@@ -100,7 +111,9 @@ export default function Navbar({
 
             color: "white",
 
-            fontSize: "24px",
+            fontSize: isMobile
+              ? "22px"
+              : "26px",
 
             boxShadow:
               "0 10px 24px rgba(34,197,94,0.25)",
@@ -112,10 +125,15 @@ export default function Navbar({
         <div>
           <h1
             style={{
-              fontSize: "24px",
+              fontSize: isMobile
+                ? "24px"
+                : "28px",
+
               fontWeight: "900",
+
               color: "#111827",
-              margin: 0,
+
+              marginBottom: "2px",
             }}
           >
             Campus Krishi
@@ -124,9 +142,8 @@ export default function Navbar({
           <p
             style={{
               fontSize: "12px",
+
               color: "#6b7280",
-              margin: 0,
-              marginTop: "4px",
             }}
           >
             Sustainable Campus Farming
@@ -134,24 +151,29 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* CENTER */}
+      {/* NAVIGATION */}
       <div
         style={{
           display: "flex",
+
           alignItems: "center",
+
+          justifyContent:
+            "center",
+
+          flexWrap: "wrap",
+
           gap: "10px",
 
-          backgroundColor: "white",
+          backgroundColor:
+            "rgba(255,255,255,0.9)",
 
-          padding: "8px",
+          padding: "10px",
 
-          borderRadius: "20px",
+          borderRadius: "24px",
 
           boxShadow:
-            "0 10px 25px rgba(0,0,0,0.05)",
-
-          border:
-            "1px solid rgba(0,0,0,0.04)",
+            "0 10px 30px rgba(0,0,0,0.06)",
         }}
       >
         <button
@@ -216,11 +238,13 @@ export default function Navbar({
             <span
               style={{
                 position: "absolute",
-                top: "-7px",
-                right: "-7px",
 
-                background:
-                  "linear-gradient(135deg,#ef4444,#dc2626)",
+                top: "-8px",
+
+                right: "-8px",
+
+                backgroundColor:
+                  "#ef4444",
 
                 color: "white",
 
@@ -240,9 +264,6 @@ export default function Navbar({
                   "center",
 
                 alignItems: "center",
-
-                boxShadow:
-                  "0 6px 14px rgba(239,68,68,0.35)",
               }}
             >
               {cartCount}
@@ -250,6 +271,7 @@ export default function Navbar({
           )}
         </button>
 
+        {/* ADMIN ONLY */}
         {isAdmin && (
           <button
             onClick={() =>
@@ -263,161 +285,23 @@ export default function Navbar({
 
               border: "none",
 
-              padding: "12px 18px",
+              padding:
+                "12px 18px",
 
-              borderRadius: "14px",
+              borderRadius:
+                "14px",
 
-              fontSize: "15px",
+              fontSize: isMobile
+                ? "13px"
+                : "15px",
 
-              fontWeight: "800",
+              fontWeight: "900",
 
               cursor: "pointer",
-
-              boxShadow:
-                "0 10px 20px rgba(0,0,0,0.2)",
             }}
           >
             👑 Admin
           </button>
-        )}
-      </div>
-
-      {/* RIGHT */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "14px",
-          flexShrink: 0,
-        }}
-      >
-        {user ? (
-          <>
-            <button
-              onClick={() =>
-                setCurrentPage(
-                  "profile"
-                )
-              }
-              style={{
-                backgroundColor:
-                  "#ecfdf5",
-
-                color: "#166534",
-
-                border:
-                  "1px solid #bbf7d0",
-
-                padding:
-                  "12px 18px",
-
-                borderRadius:
-                  "14px",
-
-                fontWeight: "800",
-
-                cursor: "pointer",
-
-                transition:
-                  "all 0.2s ease",
-              }}
-            >
-              👤 Profile
-            </button>
-
-            <button
-              onClick={logout}
-              style={{
-                background:
-                  "linear-gradient(135deg,#ef4444,#dc2626)",
-
-                color: "white",
-
-                border: "none",
-
-                padding:
-                  "12px 18px",
-
-                borderRadius:
-                  "14px",
-
-                fontWeight: "800",
-
-                cursor: "pointer",
-
-                boxShadow:
-                  "0 10px 22px rgba(239,68,68,0.22)",
-              }}
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={() =>
-                (window.location.href =
-                  "/login")
-              }
-              style={{
-                backgroundColor:
-                  "white",
-
-                color: "#166534",
-
-                border:
-                  "1px solid #d1d5db",
-
-                padding:
-                  "12px 22px",
-
-                borderRadius:
-                  "14px",
-
-                fontWeight: "800",
-
-                cursor: "pointer",
-
-                transition:
-                  "all 0.2s ease",
-
-                boxShadow:
-                  "0 6px 14px rgba(0,0,0,0.04)",
-              }}
-            >
-              Login
-            </button>
-
-            <button
-              onClick={() =>
-                (window.location.href =
-                  "/signup")
-              }
-              style={{
-                background:
-                  "linear-gradient(135deg,#166534,#22c55e)",
-
-                color: "white",
-
-                border: "none",
-
-                padding:
-                  "12px 22px",
-
-                borderRadius:
-                  "14px",
-
-                fontWeight: "800",
-
-                cursor: "pointer",
-
-                boxShadow:
-                  "0 10px 24px rgba(34,197,94,0.25)",
-              }}
-            >
-              Sign Up
-            </button>
-          </>
         )}
       </div>
     </nav>

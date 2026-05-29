@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 
 export default function AdminDashboardPage({
@@ -10,6 +10,17 @@ export default function AdminDashboardPage({
   totalProducts,
   totalOrders,
 }: any) {
+  /* LOGIN STATE */
+  const [isLoggedIn, setIsLoggedIn] =
+    useState(false);
+
+  const [username, setUsername] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  /* PRODUCT STATES */
   const [name, setName] =
     useState("");
 
@@ -22,6 +33,40 @@ export default function AdminDashboardPage({
   const [loading, setLoading] =
     useState(false);
 
+  const [liveOrders, setLiveOrders] =
+    useState<any[]>(orders || []);
+
+  useEffect(() => {
+    const stored =
+      localStorage.getItem("orders");
+
+    if (stored) {
+      setLiveOrders(
+        JSON.parse(stored)
+      );
+    }
+  }, []);
+
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.innerWidth < 768;
+
+  /* LOGIN FUNCTION */
+  function handleLogin() {
+    if (
+      username === "krishi" &&
+      password ===
+        "sumaraj@29117"
+    ) {
+      setIsLoggedIn(true);
+    } else {
+      alert(
+        "Invalid username or password"
+      );
+    }
+  }
+
+  /* IMAGE UPLOAD */
   async function uploadImage(
     file: any
   ) {
@@ -46,6 +91,7 @@ export default function AdminDashboardPage({
     return publicUrl;
   }
 
+  /* ADD PRODUCT */
   async function addProduct() {
     if (
       !name ||
@@ -96,12 +142,13 @@ export default function AdminDashboardPage({
     }
 
     alert(
-      "Vegetable added successfully 🌱"
+      "Product added successfully 🌱"
     );
 
     window.location.reload();
   }
 
+  /* DELETE PRODUCT */
   async function deleteProduct(
     id: any
   ) {
@@ -129,17 +176,158 @@ export default function AdminDashboardPage({
     }
 
     alert(
-      "Product deleted"
+      "Product deleted successfully"
     );
 
     window.location.reload();
   }
 
+  /* LOGIN SCREEN */
+  if (!isLoggedIn) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent:
+            "center",
+          alignItems: "center",
+          background:
+            "linear-gradient(135deg,#14532d,#22c55e)",
+          padding: "20px",
+          fontFamily:
+            "Inter, Arial, sans-serif",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "420px",
+            backgroundColor:
+              "white",
+            borderRadius: "32px",
+            padding: isMobile
+              ? "30px"
+              : "45px",
+            boxShadow:
+              "0 20px 50px rgba(0,0,0,0.2)",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "70px",
+              marginBottom: "20px",
+            }}
+          >
+            👑
+          </div>
+
+          <h1
+            style={{
+              fontSize: isMobile
+                ? "34px"
+                : "42px",
+              fontWeight: "900",
+              color: "#166534",
+              marginBottom: "10px",
+            }}
+          >
+            Admin Login
+          </h1>
+
+          <p
+            style={{
+              color: "#6b7280",
+              marginBottom: "32px",
+              lineHeight: "1.7",
+            }}
+          >
+            Login to manage products,
+            orders and platform data
+          </p>
+
+          {/* USERNAME */}
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) =>
+              setUsername(
+                e.target.value
+              )
+            }
+            style={{
+              width: "100%",
+              padding: "18px",
+              marginBottom: "18px",
+              borderRadius: "16px",
+              border:
+                "1px solid #d1d5db",
+              outline: "none",
+              fontSize: "16px",
+              backgroundColor:
+                "#f9fafb",
+            }}
+          />
+
+          {/* PASSWORD */}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
+            style={{
+              width: "100%",
+              padding: "18px",
+              marginBottom: "26px",
+              borderRadius: "16px",
+              border:
+                "1px solid #d1d5db",
+              outline: "none",
+              fontSize: "16px",
+              backgroundColor:
+                "#f9fafb",
+            }}
+          />
+
+          {/* BUTTON */}
+          <button
+            onClick={handleLogin}
+            style={{
+              width: "100%",
+              background:
+                "linear-gradient(135deg,#166534,#22c55e)",
+              color: "white",
+              border: "none",
+              padding: "18px",
+              borderRadius: "18px",
+              fontSize: "16px",
+              fontWeight: "900",
+              cursor: "pointer",
+              boxShadow:
+                "0 12px 24px rgba(34,197,94,0.25)",
+            }}
+          >
+            Login To Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* DASHBOARD */
   return (
     <div
       style={{
-        padding: "40px 50px",
-        backgroundColor:
+        padding: isMobile
+          ? "20px"
+          : "40px 50px",
+        background:
           "#f3f4f6",
         minHeight: "100vh",
         fontFamily:
@@ -150,29 +338,60 @@ export default function AdminDashboardPage({
       <div
         style={{
           marginBottom: "40px",
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: isMobile
+            ? "flex-start"
+            : "center",
+          flexDirection: isMobile
+            ? "column"
+            : "row",
+          gap: "20px",
         }}
       >
-        <h1
-          style={{
-            fontSize: "54px",
-            fontWeight: "800",
-            color: "#111827",
-            marginBottom: "10px",
-          }}
-        >
-          👑 Admin Dashboard
-        </h1>
+        <div>
+          <h1
+            style={{
+              fontSize: isMobile
+                ? "38px"
+                : "54px",
+              fontWeight: "900",
+              color: "#111827",
+              marginBottom: "10px",
+            }}
+          >
+            👑 Admin Dashboard
+          </h1>
 
-        <p
+          <p
+            style={{
+              fontSize: "18px",
+              color: "#6b7280",
+            }}
+          >
+            Manage products, orders
+            and analytics
+          </p>
+        </div>
+
+        <button
+          onClick={() =>
+            setIsLoggedIn(false)
+          }
           style={{
-            fontSize: "18px",
-            color: "#6b7280",
+            backgroundColor:
+              "#ef4444",
+            color: "white",
+            border: "none",
+            padding: "14px 22px",
+            borderRadius: "14px",
+            fontWeight: "800",
+            cursor: "pointer",
           }}
         >
-          Manage vegetables,
-          customer orders and
-          analytics
-        </p>
+          Logout
+        </button>
       </div>
 
       {/* STATS */}
@@ -180,7 +399,9 @@ export default function AdminDashboardPage({
         style={{
           display: "grid",
           gridTemplateColumns:
-            "repeat(auto-fit,minmax(250px,1fr))",
+            isMobile
+              ? "1fr"
+              : "repeat(auto-fit,minmax(250px,1fr))",
           gap: "24px",
           marginBottom: "40px",
         }}
@@ -192,26 +413,23 @@ export default function AdminDashboardPage({
             value: `₹${totalRevenue}`,
             color: "#16a34a",
           },
-
           {
             title:
               "Total Products",
             value: totalProducts,
             color: "#2563eb",
           },
-
           {
             title:
               "Total Orders",
             value: totalOrders,
             color: "#ea580c",
           },
-
           {
             title:
               "Customers",
             value:
-              orders.length,
+              liveOrders.length,
             color: "#9333ea",
           },
         ].map((item, index) => (
@@ -222,15 +440,15 @@ export default function AdminDashboardPage({
                 "white",
               padding: "28px",
               borderRadius:
-                "22px",
+                "24px",
               boxShadow:
-                "0 8px 24px rgba(0,0,0,0.06)",
+                "0 10px 30px rgba(0,0,0,0.06)",
               borderTop: `6px solid ${item.color}`,
             }}
           >
             <h2
               style={{
-                fontSize: "17px",
+                fontSize: "16px",
                 color: "#6b7280",
                 marginBottom:
                   "14px",
@@ -243,7 +461,7 @@ export default function AdminDashboardPage({
               style={{
                 fontSize: "42px",
                 fontWeight:
-                  "800",
+                  "900",
                 color:
                   "#111827",
               }}
@@ -254,41 +472,92 @@ export default function AdminDashboardPage({
         ))}
       </div>
 
+
+      {/* ORDERS */}
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "32px",
+          borderRadius: "28px",
+          marginBottom: "40px",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "32px",
+            fontWeight: "900",
+            marginBottom: "24px",
+          }}
+        >
+          📦 Orders
+        </h2>
+
+        {liveOrders.length === 0 ? (
+          <p>No orders yet.</p>
+        ) : (
+          liveOrders.map(
+            (order: any, index: number) => (
+              <div
+                key={index}
+                style={{
+                  border: "1px solid #e5e7eb",
+                  padding: "16px",
+                  borderRadius: "16px",
+                  marginBottom: "16px",
+                }}
+              >
+                <h3>{order.customerName}</h3>
+                <p>📞 {order.phone}</p>
+                <p>📧 {order.email}</p>
+                <p>📍 {order.address}</p>
+                <p>💬 {order.feedback}</p>
+                <p>💰 ₹{order.total}</p>
+              </div>
+            )
+          )
+        )}
+      </div>
+
       {/* ADD PRODUCT */}
       <div
         style={{
           backgroundColor:
             "white",
-          padding: "32px",
-          borderRadius: "24px",
+          padding: isMobile
+            ? "24px"
+            : "32px",
+          borderRadius: "28px",
           marginBottom: "40px",
           boxShadow:
-            "0 8px 24px rgba(0,0,0,0.06)",
+            "0 10px 30px rgba(0,0,0,0.06)",
         }}
       >
         <h2
           style={{
-            fontSize: "34px",
-            fontWeight: "800",
+            fontSize: isMobile
+              ? "28px"
+              : "36px",
+            fontWeight: "900",
             marginBottom: "26px",
             color: "#15803d",
           }}
         >
-          Add Vegetable 🥬
+          Add Product 🥬
         </h2>
 
         <div
           style={{
             display: "grid",
             gridTemplateColumns:
-              "1fr 1fr",
+              isMobile
+                ? "1fr"
+                : "1fr 1fr",
             gap: "20px",
             marginBottom: "20px",
           }}
         >
-          {/* NAME */}
           <input
-            placeholder="Vegetable Name"
+            placeholder="Product Name"
             value={name}
             onChange={(e) =>
               setName(
@@ -296,19 +565,20 @@ export default function AdminDashboardPage({
               )
             }
             style={{
-              padding: "16px",
+              padding: "18px",
               border:
                 "1px solid #d1d5db",
               borderRadius:
-                "14px",
+                "16px",
               fontSize: "16px",
               outline: "none",
+              backgroundColor:
+                "#f9fafb",
             }}
           />
 
-          {/* PRICE */}
           <input
-            placeholder="Price per kg"
+            placeholder="Price Per Kg"
             value={price}
             onChange={(e) =>
               setPrice(
@@ -316,80 +586,55 @@ export default function AdminDashboardPage({
               )
             }
             style={{
-              padding: "16px",
+              padding: "18px",
               border:
                 "1px solid #d1d5db",
               borderRadius:
-                "14px",
+                "16px",
               fontSize: "16px",
               outline: "none",
-            }}
-          />
-        </div>
-
-        {/* IMAGE PICKER */}
-        <div
-          style={{
-            marginBottom: "24px",
-          }}
-        >
-          <label
-            style={{
-              display: "block",
-              marginBottom: "10px",
-              fontWeight: "700",
-              color: "#374151",
-            }}
-          >
-            Upload Product Image
-          </label>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e: any) =>
-              setImageFile(
-                e.target.files[0]
-              )
-            }
-            style={{
-              width: "100%",
-              padding: "14px",
-              border:
-                "1px dashed #9ca3af",
-              borderRadius:
-                "14px",
               backgroundColor:
                 "#f9fafb",
-              cursor: "pointer",
             }}
           />
         </div>
+
+        {/* IMAGE */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e: any) =>
+            setImageFile(
+              e.target.files[0]
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "16px",
+            border:
+              "1px dashed #9ca3af",
+            borderRadius: "16px",
+            backgroundColor:
+              "#f9fafb",
+            marginBottom: "24px",
+          }}
+        />
 
         {/* PREVIEW */}
         {imageFile && (
-          <div
+          <img
+            src={URL.createObjectURL(
+              imageFile
+            )}
+            alt="Preview"
             style={{
+              width: "150px",
+              height: "150px",
+              objectFit: "cover",
+              borderRadius: "18px",
               marginBottom: "24px",
             }}
-          >
-            <img
-              src={URL.createObjectURL(
-                imageFile
-              )}
-              alt="Preview"
-              style={{
-                width: "140px",
-                height: "140px",
-                objectFit:
-                  "cover",
-                borderRadius:
-                  "18px",
-                border:
-                  "1px solid #e5e7eb",
-              }}
-            />
-          </div>
+          />
         )}
 
         {/* BUTTON */}
@@ -402,298 +647,21 @@ export default function AdminDashboardPage({
             color: "white",
             border: "none",
             padding:
-              "16px 32px",
+              "16px 30px",
             borderRadius:
-              "14px",
+              "16px",
             fontSize: "16px",
-            fontWeight: "800",
+            fontWeight: "900",
             cursor: "pointer",
-            boxShadow:
-              "0 8px 18px rgba(34,197,94,0.25)",
+            width: isMobile
+              ? "100%"
+              : "auto",
           }}
         >
           {loading
             ? "Adding..."
             : "Add Product"}
         </button>
-      </div>
-
-      {/* PRODUCTS */}
-      <div
-        style={{
-          backgroundColor:
-            "white",
-          padding: "32px",
-          borderRadius: "24px",
-          marginBottom: "40px",
-          boxShadow:
-            "0 8px 24px rgba(0,0,0,0.06)",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "34px",
-            fontWeight: "800",
-            marginBottom: "28px",
-            color: "#15803d",
-          }}
-        >
-          Current Products 📦
-        </h2>
-
-        <div
-          style={{
-            display: "grid",
-            gap: "18px",
-          }}
-        >
-          {products.map(
-            (
-              product: any,
-              index: number
-            ) => (
-              <div
-                key={index}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "100px 1fr auto",
-                  alignItems:
-                    "center",
-                  gap: "20px",
-                  padding: "20px",
-                  border:
-                    "1px solid #e5e7eb",
-                  borderRadius:
-                    "18px",
-                }}
-              >
-                <img
-                  src={
-                    product.image
-                  }
-                  alt={
-                    product.name
-                  }
-                  style={{
-                    width: "90px",
-                    height: "90px",
-                    objectFit:
-                      "cover",
-                    borderRadius:
-                      "16px",
-                  }}
-                />
-
-                <div>
-                  <h2
-                    style={{
-                      fontSize:
-                        "24px",
-                      fontWeight:
-                        "800",
-                      marginBottom:
-                        "8px",
-                      color:
-                        "#111827",
-                    }}
-                  >
-                    {
-                      product.name
-                    }
-                  </h2>
-
-                  <p
-                    style={{
-                      fontSize:
-                        "18px",
-                      color:
-                        "#16a34a",
-                      fontWeight:
-                        "700",
-                    }}
-                  >
-                    ₹
-                    {
-                      product.price
-                    }
-                    /kg
-                  </p>
-                </div>
-
-                <button
-                  onClick={() =>
-                    deleteProduct(
-                      product.id
-                    )
-                  }
-                  style={{
-                    backgroundColor:
-                      "#ef4444",
-                    color:
-                      "white",
-                    border:
-                      "none",
-                    padding:
-                      "14px 20px",
-                    borderRadius:
-                      "12px",
-                    fontWeight:
-                      "700",
-                    cursor:
-                      "pointer",
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            )
-          )}
-        </div>
-      </div>
-
-      {/* ORDERS */}
-      <div
-        style={{
-          backgroundColor:
-            "white",
-          padding: "32px",
-          borderRadius: "24px",
-          boxShadow:
-            "0 8px 24px rgba(0,0,0,0.06)",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "34px",
-            fontWeight: "800",
-            marginBottom: "28px",
-            color: "#15803d",
-          }}
-        >
-          Customer Orders 🛒
-        </h2>
-
-        {orders.length === 0 ? (
-          <p
-            style={{
-              fontSize: "18px",
-              color: "#6b7280",
-            }}
-          >
-            No orders yet.
-          </p>
-        ) : (
-          <div
-            style={{
-              display: "grid",
-              gap: "18px",
-            }}
-          >
-            {orders.map(
-              (
-                order: any,
-                index: number
-              ) => (
-                <div
-                  key={index}
-                  style={{
-                    border:
-                      "1px solid #e5e7eb",
-                    borderRadius:
-                      "18px",
-                    padding:
-                      "22px",
-                    display:
-                      "flex",
-                    justifyContent:
-                      "space-between",
-                    alignItems:
-                      "center",
-                    flexWrap: "wrap",
-                    gap: "20px",
-                  }}
-                >
-                  <div>
-                    <h3
-                      style={{
-                        fontSize:
-                          "24px",
-                        fontWeight:
-                          "800",
-                        marginBottom:
-                          "8px",
-                        color:
-                          "#111827",
-                      }}
-                    >
-                      {
-                        order.name
-                      }
-                    </h3>
-
-                    <p
-                      style={{
-                        fontSize:
-                          "16px",
-                        color:
-                          "#6b7280",
-                        marginBottom:
-                          "4px",
-                      }}
-                    >
-                      Quantity:
-                      {" "}
-                      {
-                        order.quantity
-                      }
-                      kg
-                    </p>
-
-                    {order.address && (
-                      <p
-                        style={{
-                          fontSize:
-                            "15px",
-                          color:
-                            "#6b7280",
-                        }}
-                      >
-                        Address:
-                        {" "}
-                        {
-                          order.address
-                        }
-                      </p>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize:
-                        "28px",
-                      fontWeight:
-                        "800",
-                      color:
-                        "#16a34a",
-                    }}
-                  >
-                    ₹
-                    {parseInt(
-                      String(
-                        order.price
-                      ).replace(
-                        /[^\d]/g,
-                        ""
-                      )
-                    ) *
-                      order.quantity}
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

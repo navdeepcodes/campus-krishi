@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { supabase } from "../lib/supabase";
 
 import Navbar from "../components/Navbar";
@@ -38,6 +39,10 @@ export default function HomePage() {
   const [loading, setLoading] =
     useState(true);
 
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.innerWidth < 768;
+
   const adminEmails = [
     "navdeeptrox@gmail.com",
   ];
@@ -73,20 +78,12 @@ export default function HomePage() {
   async function logout() {
     await supabase.auth.signOut();
 
-    alert("Logged out successfully 🌱");
+    alert("Admin logged out");
 
-    window.location.href = "/";
+    window.location.reload();
   }
 
   function addToCart(product: any) {
-    if (!user) {
-      alert(
-        "Please login to add items to cart 🌱"
-      );
-
-      return;
-    }
-
     const existingIndex = cart.findIndex(
       (item) => item.id === product.id
     );
@@ -137,14 +134,6 @@ export default function HomePage() {
   }
 
   function placeOrder() {
-    if (!user) {
-      alert(
-        "Please login to continue checkout 🌱"
-      );
-
-      return;
-    }
-
     if (cart.length === 0) {
       alert("Cart is empty");
       return;
@@ -174,22 +163,27 @@ export default function HomePage() {
           alignItems: "center",
           background:
             "linear-gradient(to bottom,#f8fafc,#eefbf3)",
+          padding: "20px",
         }}
       >
         <div
           style={{
             backgroundColor: "white",
-            padding: "40px 60px",
-            borderRadius: "30px",
-            boxShadow:
-              "0 16px 40px rgba(0,0,0,0.08)",
+            padding: isMobile
+              ? "30px"
+              : "50px 70px",
+            borderRadius: "32px",
             textAlign: "center",
+            boxShadow:
+              "0 20px 50px rgba(0,0,0,0.08)",
+            width: "100%",
+            maxWidth: "450px",
           }}
         >
           <div
             style={{
-              fontSize: "60px",
-              marginBottom: "18px",
+              fontSize: "70px",
+              marginBottom: "20px",
             }}
           >
             🌱
@@ -197,13 +191,15 @@ export default function HomePage() {
 
           <h1
             style={{
-              fontSize: "32px",
+              fontSize: isMobile
+                ? "30px"
+                : "40px",
               color: "#166534",
-              marginBottom: "10px",
               fontWeight: "900",
+              marginBottom: "12px",
             }}
           >
-            Loading Campus Krishi
+            Campus Krishi
           </h1>
 
           <p
@@ -212,7 +208,7 @@ export default function HomePage() {
               fontSize: "16px",
             }}
           >
-            Preparing fresh organic
+            Loading fresh organic
             experience...
           </p>
         </div>
@@ -230,11 +226,10 @@ export default function HomePage() {
           "Inter, Arial, sans-serif",
       }}
     >
+      {/* NAVBAR */}
       <Navbar
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        user={user}
-        logout={logout}
         isAdmin={isAdmin}
         cartCount={cart.length}
       />
@@ -247,18 +242,27 @@ export default function HomePage() {
             style={{
               background:
                 "linear-gradient(135deg,#14532d,#22c55e)",
-              minHeight: "560px",
+              minHeight: isMobile
+                ? "auto"
+                : "650px",
               display: "flex",
+              flexDirection:
+                isMobile
+                  ? "column"
+                  : "row",
               justifyContent:
                 "space-between",
               alignItems: "center",
-              padding: "90px 80px",
+              padding: isMobile
+                ? "70px 22px"
+                : "90px 80px",
               color: "white",
               position: "relative",
               overflow: "hidden",
+              gap: "40px",
             }}
           >
-            {/* BACKGROUND EFFECTS */}
+            {/* BG CIRCLE */}
             <div
               style={{
                 position: "absolute",
@@ -272,24 +276,14 @@ export default function HomePage() {
               }}
             />
 
-            <div
-              style={{
-                position: "absolute",
-                width: "280px",
-                height: "280px",
-                borderRadius: "50%",
-                background:
-                  "rgba(255,255,255,0.05)",
-                bottom: "-100px",
-                left: "-80px",
-              }}
-            />
-
             {/* LEFT */}
             <div
               style={{
-                maxWidth: "700px",
+                maxWidth: "720px",
                 zIndex: 2,
+                textAlign: isMobile
+                  ? "center"
+                  : "left",
               }}
             >
               <div
@@ -299,7 +293,7 @@ export default function HomePage() {
                     "rgba(255,255,255,0.15)",
                   padding: "12px 22px",
                   borderRadius: "999px",
-                  marginBottom: "28px",
+                  marginBottom: "30px",
                   backdropFilter:
                     "blur(10px)",
                   fontWeight: "700",
@@ -312,10 +306,12 @@ export default function HomePage() {
 
               <h1
                 style={{
-                  fontSize: "76px",
-                  lineHeight: "1",
+                  fontSize: isMobile
+                    ? "54px"
+                    : "92px",
+                  lineHeight: "0.95",
                   fontWeight: "900",
-                  marginBottom: "28px",
+                  marginBottom: "30px",
                 }}
               >
                 Campus Krishi
@@ -323,26 +319,32 @@ export default function HomePage() {
 
               <p
                 style={{
-                  fontSize: "20px",
+                  fontSize: isMobile
+                    ? "17px"
+                    : "22px",
                   lineHeight: "1.9",
-                  maxWidth: "620px",
-                  marginBottom: "40px",
+                  marginBottom: "42px",
                   opacity: 0.95,
                 }}
               >
                 Fresh organic produce,
-                student-driven farming,
-                sustainability innovation,
+                sustainable farming,
+                student-driven innovation,
                 and climate-conscious
                 agriculture directly from
                 campus farms.
               </p>
 
+              {/* BUTTONS */}
               <div
                 style={{
                   display: "flex",
-                  gap: "18px",
+                  gap: "16px",
                   flexWrap: "wrap",
+                  justifyContent:
+                    isMobile
+                      ? "center"
+                      : "flex-start",
                 }}
               >
                 <button
@@ -357,14 +359,14 @@ export default function HomePage() {
                     color: "#166534",
                     border: "none",
                     padding:
-                      "18px 34px",
+                      "18px 30px",
                     borderRadius:
                       "18px",
                     fontWeight: "900",
                     cursor: "pointer",
                     fontSize: "15px",
                     boxShadow:
-                      "0 12px 28px rgba(0,0,0,0.18)",
+                      "0 12px 28px rgba(0,0,0,0.15)",
                   }}
                 >
                   🌿 Explore Vision
@@ -383,7 +385,7 @@ export default function HomePage() {
                     border:
                       "2px solid rgba(255,255,255,0.7)",
                     padding:
-                      "18px 34px",
+                      "18px 30px",
                     borderRadius:
                       "18px",
                     fontWeight: "900",
@@ -394,7 +396,7 @@ export default function HomePage() {
                   Learn Process
                 </button>
 
-                {!user && (
+                {!isAdmin && (
                   <button
                     onClick={() =>
                       (window.location.href =
@@ -402,19 +404,21 @@ export default function HomePage() {
                     }
                     style={{
                       background:
-                        "#111827",
+                        "linear-gradient(135deg,#111827,#374151)",
                       color: "white",
                       border: "none",
                       padding:
-                        "18px 34px",
+                        "18px 30px",
                       borderRadius:
                         "18px",
                       fontWeight: "900",
                       cursor: "pointer",
                       fontSize: "15px",
+                      boxShadow:
+                        "0 12px 28px rgba(0,0,0,0.2)",
                     }}
                   >
-                    Create Account
+                    👑 Admin Login
                   </button>
                 )}
 
@@ -427,11 +431,11 @@ export default function HomePage() {
                     }
                     style={{
                       background:
-                        "linear-gradient(135deg,#111827,#374151)",
+                        "#111827",
                       color: "white",
                       border: "none",
                       padding:
-                        "18px 34px",
+                        "18px 30px",
                       borderRadius:
                         "18px",
                       fontWeight: "900",
@@ -439,7 +443,7 @@ export default function HomePage() {
                       fontSize: "15px",
                     }}
                   >
-                    👑 Admin Dashboard
+                    👑 Dashboard
                   </button>
                 )}
               </div>
@@ -448,29 +452,77 @@ export default function HomePage() {
             {/* RIGHT */}
             <div
               style={{
-                fontSize: "180px",
                 zIndex: 2,
-                filter:
-                  "drop-shadow(0 12px 20px rgba(0,0,0,0.2))",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "24px",
               }}
             >
-              🌿
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.95)",
+                  padding: "30px",
+                  borderRadius: "32px",
+                  boxShadow:
+                    "0 25px 60px rgba(255,255,255,0.35)",
+                }}
+              >
+                <Image
+                  src="/krishilogo.png"
+                  alt="Campus Krishi Logo"
+                  priority
+                  width={320}
+                  height={320}
+                  style={{
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  background: "white",
+                  padding: "16px 24px",
+                  borderRadius: "18px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                <Image
+                  src="/nmitlogo.png"
+                  alt="NMIT Logo"
+                  width={60}
+                  height={60}
+                />
+                <div
+                  style={{
+                    color: "#111827",
+                    fontWeight: "800",
+                  }}
+                >
+                  NITTE Meenakshi Institute
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* MAIN */}
+          {/* MAIN CONTENT */}
           <div
             style={{
               maxWidth: "1450px",
               margin: "0 auto",
-              padding: "90px 40px",
+              padding: isMobile
+                ? "60px 18px"
+                : "100px 40px",
             }}
           >
             {/* HEADER */}
             <div
               style={{
                 textAlign: "center",
-                marginBottom: "50px",
+                marginBottom: "60px",
               }}
             >
               <div
@@ -491,10 +543,12 @@ export default function HomePage() {
 
               <h1
                 style={{
-                  fontSize: "56px",
+                  fontSize: isMobile
+                    ? "42px"
+                    : "66px",
                   fontWeight: "900",
                   color: "#111827",
-                  marginBottom: "16px",
+                  marginBottom: "18px",
                 }}
               >
                 Today's Fresh Vegetables
@@ -519,7 +573,7 @@ export default function HomePage() {
                 display: "flex",
                 justifyContent:
                   "center",
-                marginBottom: "60px",
+                marginBottom: "70px",
               }}
             >
               <input
@@ -532,11 +586,12 @@ export default function HomePage() {
                   )
                 }
                 style={{
-                  width: "520px",
+                  width: "100%",
+                  maxWidth: "560px",
                   padding:
-                    "18px 24px",
+                    "20px 24px",
                   borderRadius:
-                    "20px",
+                    "22px",
                   border:
                     "1px solid #d1d5db",
                   outline: "none",
@@ -544,7 +599,7 @@ export default function HomePage() {
                   backgroundColor:
                     "white",
                   boxShadow:
-                    "0 12px 28px rgba(0,0,0,0.06)",
+                    "0 14px 30px rgba(0,0,0,0.06)",
                 }}
               />
             </div>
@@ -554,7 +609,9 @@ export default function HomePage() {
               style={{
                 display: "grid",
                 gridTemplateColumns:
-                  "repeat(auto-fit,minmax(300px,1fr))",
+                  isMobile
+                    ? "1fr"
+                    : "repeat(auto-fit,minmax(320px,1fr))",
                 gap: "30px",
               }}
             >
@@ -588,174 +645,219 @@ export default function HomePage() {
                 )
               )}
             </div>
-
-            {/* FEATURES */}
-            <div
-              style={{
-                marginTop: "120px",
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(auto-fit,minmax(320px,1fr))",
-                gap: "30px",
-              }}
-            >
-              {[
-                {
-                  icon: "🌱",
-                  title:
-                    "Sustainable Farming",
-                  desc:
-                    "Organic farming with climate-resilient agricultural methods.",
-                },
-                {
-                  icon: "👨‍🎓",
-                  title:
-                    "Student Innovation",
-                  desc:
-                    "Hands-on sustainability and agricultural innovation projects.",
-                },
-                {
-                  icon: "🤝",
-                  title:
-                    "Community Impact",
-                  desc:
-                    "Building awareness and collaboration for a greener future.",
-                },
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    backgroundColor:
-                      "white",
-                    padding: "40px",
-                    borderRadius:
-                      "30px",
-                    textAlign:
-                      "center",
-                    boxShadow:
-                      "0 14px 36px rgba(0,0,0,0.05)",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "64px",
-                      marginBottom:
-                        "22px",
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-
-                  <h2
-                    style={{
-                      fontSize: "28px",
-                      fontWeight:
-                        "900",
-                      color:
-                        "#111827",
-                      marginBottom:
-                        "14px",
-                    }}
-                  >
-                    {item.title}
-                  </h2>
-
-                  <p
-                    style={{
-                      color:
-                        "#6b7280",
-                      lineHeight:
-                        "1.9",
-                    }}
-                  >
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* FOOTER */}
           <footer
             style={{
-              marginTop: "100px",
               background:
-                "linear-gradient(135deg,#0f172a,#1e293b)",
+                "linear-gradient(135deg,#1e3a5f,#243b55)",
               color: "white",
-              padding:
-                "70px 40px",
+              marginTop: "100px",
+              padding: isMobile
+                ? "50px 24px 30px"
+                : "70px 60px 30px",
             }}
           >
             <div
               style={{
                 maxWidth: "1450px",
                 margin: "0 auto",
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(auto-fit,minmax(250px,1fr))",
-                gap: "40px",
               }}
             >
-              <div>
-                <h2
-                  style={{
-                    fontSize: "34px",
-                    fontWeight: "900",
-                    marginBottom:
-                      "18px",
-                  }}
-                >
-                  🌱 Campus Krishi
-                </h2>
+              {/* TOP */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    isMobile
+                      ? "1fr"
+                      : "1.2fr 1fr 1fr",
+                  gap: "50px",
+                  marginBottom: "50px",
+                }}
+              >
+                {/* LEFT */}
+                <div>
+                  <h2
+                    style={{
+                      fontSize:
+                        isMobile
+                          ? "42px"
+                          : "54px",
+                      fontWeight: "900",
+                      marginBottom: "22px",
+                    }}
+                  >
+                    🌱 Campus Krishi
+                  </h2>
 
-                <p
-                  style={{
-                    color:
-                      "#cbd5e1",
-                    lineHeight:
-                      "1.9",
-                  }}
-                >
-                  Sustainable farming,
-                  fresh produce, and
-                  student-driven climate
-                  innovation.
-                </p>
+                  <p
+                    style={{
+                      color:
+                        "rgba(255,255,255,0.8)",
+                      lineHeight: "1.9",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Providing fresh,
+                    nutritious produce and
+                    hands-on sustainability
+                    education through
+                    student-driven farming
+                    innovation.
+                  </p>
+                </div>
+
+                {/* QUICK LINKS */}
+                <div>
+                  <h3
+                    style={{
+                      fontSize: "34px",
+                      fontWeight: "900",
+                      marginBottom: "24px",
+                    }}
+                  >
+                    Quick Links
+                  </h3>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection:
+                        "column",
+                      gap: "16px",
+                    }}
+                  >
+                    {[
+                      {
+                        label: "🏠 Home",
+                        page: "home",
+                      },
+                      {
+                        label:
+                          "🌿 Vision",
+                        page: "vision",
+                      },
+                      {
+                        label:
+                          "⚙️ Process",
+                        page: "process",
+                      },
+                      {
+                        label:
+                          "ℹ️ About",
+                        page: "about",
+                      },
+                    ].map((item) => (
+                      <button
+                        key={item.page}
+                        onClick={() =>
+                          setCurrentPage(
+                            item.page
+                          )
+                        }
+                        style={{
+                          background:
+                            "transparent",
+                          border: "none",
+                          color:
+                            "rgba(255,255,255,0.85)",
+                          textAlign:
+                            "left",
+                          fontSize:
+                            "18px",
+                          cursor:
+                            "pointer",
+                          transition:
+                            "0.2s",
+                        }}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CONTACT */}
+                <div>
+                  <h3
+                    style={{
+                      fontSize: "34px",
+                      fontWeight: "900",
+                      marginBottom: "24px",
+                    }}
+                  >
+                    Contact Info
+                  </h3>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection:
+                        "column",
+                      gap: "18px",
+                      color:
+                        "rgba(255,255,255,0.85)",
+                      fontSize: "18px",
+                      lineHeight: "1.8",
+                    }}
+                  >
+                    <a
+                      href="mailto:sumararaj.r@nmit.ac.in"
+                      style={{
+                        color:
+                          "rgba(255,255,255,0.85)",
+                        textDecoration:
+                          "none",
+                      }}
+                    >
+                      ✉️ sumaraj.r@nmit.ac.in
+                    </a>
+
+                    <a
+                      href="tel:7349784480"
+                      style={{
+                        color:
+                          "rgba(255,255,255,0.85)",
+                        textDecoration:
+                          "none",
+                      }}
+                    >
+                      📞 7349784480
+                    </a>
+
+                    <a
+                      href="https://maps.google.com/?q=NMIT+Bangalore"
+                      target="_blank"
+                      style={{
+                        color:
+                          "rgba(255,255,255,0.85)",
+                        textDecoration:
+                          "none",
+                      }}
+                    >
+                      📍 NMIT Campus,
+                      Bengaluru
+                    </a>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: "800",
-                    marginBottom:
-                      "18px",
-                  }}
-                >
-                  Contact
-                </h3>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection:
-                      "column",
-                    gap: "12px",
-                    color: "#cbd5e1",
-                  }}
-                >
-                  <span>
-                    📧 sumaraj.r@nmit.ac.in
-                  </span>
-
-                  <span>
-                    📞 7349784480
-                  </span>
-
-                  <span>
-                    📍 NMIT Campus
-                  </span>
-                </div>
+              {/* BOTTOM */}
+              <div
+                style={{
+                  borderTop:
+                    "1px solid rgba(255,255,255,0.15)",
+                  paddingTop: "24px",
+                  textAlign: "center",
+                  color:
+                    "rgba(255,255,255,0.75)",
+                  fontSize: "16px",
+                }}
+              >
+                © 2026 Campus Krishi.
+                All rights reserved.
               </div>
             </div>
           </footer>
@@ -766,11 +868,10 @@ export default function HomePage() {
       {currentPage === "cart" && (
         <CartPage
           cart={cart}
-          removeFromCart={
-            removeFromCart
-          }
+          removeFromCart={removeFromCart}
           getTotal={getTotal}
           placeOrder={placeOrder}
+          setCart={setCart}
         />
       )}
 
@@ -826,92 +927,6 @@ export default function HomePage() {
             }
           />
         )}
-
-      {/* PROFILE */}
-      {currentPage === "profile" && (
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "60px 40px",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor:
-                "white",
-              padding: "40px",
-              borderRadius: "30px",
-              boxShadow:
-                "0 14px 36px rgba(0,0,0,0.06)",
-            }}
-          >
-            <h1
-              style={{
-                fontSize: "42px",
-                fontWeight: "900",
-                color: "#111827",
-                marginBottom: "28px",
-              }}
-            >
-              👤 Profile
-            </h1>
-
-            <div
-              style={{
-                background:
-                  "#f0fdf4",
-                padding: "20px",
-                borderRadius: "20px",
-                border:
-                  "1px solid #bbf7d0",
-              }}
-            >
-              <p
-                style={{
-                  color: "#166534",
-                  fontWeight: "800",
-                  marginBottom: "8px",
-                }}
-              >
-                Logged in as
-              </p>
-
-              <h2
-                style={{
-                  fontSize: "20px",
-                  color: "#111827",
-                  fontWeight: "900",
-                }}
-              >
-                {user?.email ||
-                  "Guest User"}
-              </h2>
-            </div>
-
-            {isAdmin && (
-              <div
-                style={{
-                  marginTop: "24px",
-                  background:
-                    "linear-gradient(135deg,#166534,#22c55e)",
-                  color: "white",
-                  padding:
-                    "14px 22px",
-                  borderRadius:
-                    "16px",
-                  display:
-                    "inline-block",
-                  fontWeight:
-                    "900",
-                }}
-              >
-                👑 ADMIN ACCESS ENABLED
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

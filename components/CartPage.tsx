@@ -5,66 +5,197 @@ export default function CartPage({
   removeFromCart,
   getTotal,
   placeOrder,
+  setCart,
 }: any) {
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.innerWidth < 768;
+
+  function increaseQuantity(
+    index: number
+  ) {
+    const updatedCart = [...cart];
+
+    updatedCart[index].quantity += 1;
+
+    setCart(updatedCart);
+  }
+
+  function decreaseQuantity(
+    index: number
+  ) {
+    const updatedCart = [...cart];
+
+    if (
+      updatedCart[index].quantity > 1
+    ) {
+      updatedCart[index].quantity -= 1;
+
+      setCart(updatedCart);
+    }
+  }
+
   return (
     <div
       style={{
         maxWidth: "1450px",
         margin: "0 auto",
-        padding: "50px 40px 90px",
+        padding: isMobile
+          ? "24px 16px"
+          : "50px 40px",
+        fontFamily:
+          "Inter, Arial, sans-serif",
       }}
     >
       {/* HEADER */}
       <div
         style={{
+          marginBottom: "40px",
+          textAlign: isMobile
+            ? "center"
+            : "left",
+        }}
+      >
+        <div
+          style={{
+            display: "inline-block",
+            background:
+              "#dcfce7",
+            color: "#166534",
+            padding: "10px 18px",
+            borderRadius:
+              "999px",
+            fontWeight: "700",
+            fontSize: "14px",
+            marginBottom: "18px",
+          }}
+        >
+          🛒 Your Cart
+        </div>
+
+        <h1
+          style={{
+            fontSize: isMobile
+              ? "40px"
+              : "56px",
+            fontWeight: "900",
+            color: "#111827",
+            marginBottom: "14px",
+          }}
+        >
+          Shopping Cart
+        </h1>
+
+        <p
+          style={{
+            color: "#6b7280",
+            fontSize: "18px",
+            lineHeight: "1.8",
+          }}
+        >
+          Review your fresh organic
+          vegetables before checkout.
+        </p>
+      </div>
+
+      {/* KRISHI INFO */}
+      <div
+        style={{
+          background:
+            "linear-gradient(135deg,#14532d,#22c55e)",
+          borderRadius: "34px",
+          padding: isMobile
+            ? "32px 24px"
+            : "42px 50px",
+          color: "white",
+          marginBottom: "42px",
           display: "flex",
+          flexDirection: isMobile
+            ? "column"
+            : "row",
           justifyContent:
             "space-between",
           alignItems: "center",
-          marginBottom: "36px",
-          flexWrap: "wrap",
-          gap: "20px",
+          gap: "30px",
+          overflow: "hidden",
+          position: "relative",
         }}
       >
-        <div>
-          <h1
+        {/* BG EFFECT */}
+        <div
+          style={{
+            position: "absolute",
+            width: "380px",
+            height: "380px",
+            borderRadius: "50%",
+            background:
+              "rgba(255,255,255,0.06)",
+            top: "-140px",
+            right: "-120px",
+          }}
+        />
+
+        <div
+          style={{
+            maxWidth: "700px",
+            zIndex: 2,
+          }}
+        >
+          <div
             style={{
-              fontSize: "44px",
+              display: "inline-block",
+              background:
+                "rgba(255,255,255,0.15)",
+              padding: "10px 18px",
+              borderRadius: "999px",
+              marginBottom: "18px",
               fontWeight: "800",
-              color: "#111827",
-              marginBottom: "10px",
-              letterSpacing: "-1px",
+              fontSize: "13px",
             }}
           >
-            🛒 Your Cart
-          </h1>
+            🌱 About Campus Krishi
+          </div>
+
+          <h2
+            style={{
+              fontSize: isMobile
+                ? "34px"
+                : "50px",
+              fontWeight: "900",
+              marginBottom: "18px",
+              lineHeight: "1.1",
+            }}
+          >
+            Fresh From Campus Farms
+          </h2>
 
           <p
             style={{
-              color: "#6b7280",
-              fontSize: "16px",
-              lineHeight: "1.7",
+              lineHeight: "1.9",
+              fontSize: "17px",
+              opacity: 0.95,
             }}
           >
-            Review your fresh organic
-            vegetables before checkout
+            Campus Krishi is a
+            student-led sustainable
+            agriculture initiative
+            focused on organic farming,
+            eco-friendly practices,
+            and farm-to-community
+            fresh produce directly from
+            NMIT campus farms.
           </p>
         </div>
 
         <div
           style={{
-            background:
-              "linear-gradient(135deg,#16a34a,#22c55e)",
-            color: "white",
-            padding: "14px 22px",
-            borderRadius: "16px",
-            fontWeight: "700",
-            fontSize: "15px",
-            boxShadow:
-              "0 10px 20px rgba(34,197,94,0.25)",
+            fontSize: isMobile
+              ? "110px"
+              : "170px",
+            zIndex: 2,
           }}
         >
-          {cart.length} Items Added
+          🌿
         </div>
       </div>
 
@@ -74,28 +205,32 @@ export default function CartPage({
           style={{
             backgroundColor:
               "white",
-            borderRadius: "28px",
-            padding: "80px 40px",
+            borderRadius: "32px",
+            padding: isMobile
+              ? "50px 24px"
+              : "90px",
             textAlign: "center",
             boxShadow:
-              "0 10px 35px rgba(0,0,0,0.05)",
+              "0 16px 40px rgba(0,0,0,0.05)",
           }}
         >
           <div
             style={{
               fontSize: "90px",
-              marginBottom: "20px",
+              marginBottom: "24px",
             }}
           >
-            🥬
+            🛒
           </div>
 
           <h2
             style={{
-              fontSize: "32px",
-              fontWeight: "800",
+              fontSize: isMobile
+                ? "32px"
+                : "40px",
+              fontWeight: "900",
               color: "#111827",
-              marginBottom: "14px",
+              marginBottom: "16px",
             }}
           >
             Your cart is empty
@@ -104,12 +239,12 @@ export default function CartPage({
           <p
             style={{
               color: "#6b7280",
-              fontSize: "16px",
-              lineHeight: "1.7",
+              fontSize: "18px",
+              lineHeight: "1.8",
             }}
           >
-            Add fresh vegetables from
-            Campus Krishi to continue
+            Add fresh vegetables to
+            continue shopping 🌱
           </p>
         </div>
       ) : (
@@ -117,20 +252,19 @@ export default function CartPage({
           style={{
             display: "grid",
             gridTemplateColumns:
-              "2fr 1fr",
-            gap: "28px",
+              isMobile
+                ? "1fr"
+                : "2fr 1fr",
+            gap: "30px",
             alignItems: "start",
           }}
         >
-          {/* LEFT SIDE */}
+          {/* LEFT */}
           <div
             style={{
-              backgroundColor:
-                "white",
-              borderRadius: "28px",
-              padding: "28px",
-              boxShadow:
-                "0 12px 35px rgba(0,0,0,0.05)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px",
             }}
           >
             {cart.map(
@@ -146,209 +280,266 @@ export default function CartPage({
                       /[^\d]/g,
                       ""
                     )
-                  ) || 0;
+                  );
+
+                const totalPrice =
+                  price *
+                  item.quantity;
 
                 return (
                   <div
                     key={index}
                     style={{
-                      display:
-                        "flex",
-                      justifyContent:
-                        "space-between",
-                      alignItems:
-                        "center",
-                      gap: "18px",
+                      backgroundColor:
+                        "white",
+                      borderRadius:
+                        "30px",
                       padding:
-                        "22px 0",
-                      borderBottom:
-                        index !==
-                        cart.length -
-                          1
-                          ? "1px solid #f1f5f9"
-                          : "none",
-                      flexWrap: "wrap",
+                        isMobile
+                          ? "20px"
+                          : "24px",
+                      display: "flex",
+                      flexDirection:
+                        isMobile
+                          ? "column"
+                          : "row",
+                      gap: "24px",
+                      alignItems:
+                        isMobile
+                          ? "flex-start"
+                          : "center",
+                      boxShadow:
+                        "0 14px 36px rgba(0,0,0,0.05)",
                     }}
                   >
-                    {/* PRODUCT */}
+                    {/* IMAGE */}
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      style={{
+                        width: isMobile
+                          ? "100%"
+                          : "150px",
+                        height:
+                          isMobile
+                            ? "220px"
+                            : "150px",
+                        borderRadius:
+                          "24px",
+                        objectFit:
+                          "cover",
+                      }}
+                    />
+
+                    {/* DETAILS */}
                     <div
                       style={{
-                        display:
-                          "flex",
-                        alignItems:
-                          "center",
-                        gap: "18px",
                         flex: 1,
-                        minWidth:
-                          "280px",
+                        width: "100%",
                       }}
                     >
-                      <img
-                        src={
-                          item.image &&
-                          item.image.trim() !==
-                            ""
-                            ? item.image
-                            : "https://via.placeholder.com/300x300?text=Vegetable"
-                        }
-                        alt={
-                          item.name ||
-                          "Vegetable"
-                        }
+                      <div
                         style={{
-                          width:
-                            "88px",
-                          height:
-                            "88px",
-                          objectFit:
-                            "cover",
+                          display:
+                            "inline-block",
+                          background:
+                            "#dcfce7",
+                          color:
+                            "#166534",
+                          padding:
+                            "6px 12px",
                           borderRadius:
-                            "20px",
-                          border:
-                            "1px solid #e5e7eb",
-                          backgroundColor:
-                            "#f9fafb",
+                            "999px",
+                          fontSize:
+                            "12px",
+                          fontWeight:
+                            "800",
+                          marginBottom:
+                            "14px",
                         }}
-                      />
+                      >
+                        🌱 Organic
+                      </div>
 
-                      <div>
-                        <h2
-                          style={{
-                            fontSize:
-                              "20px",
-                            fontWeight:
-                              "800",
-                            color:
-                              "#111827",
-                            marginBottom:
-                              "6px",
-                          }}
-                        >
-                          {
-                            item.name
-                          }
-                        </h2>
+                      <h2
+                        style={{
+                          fontSize:
+                            isMobile
+                              ? "28px"
+                              : "32px",
+                          fontWeight:
+                            "900",
+                          color:
+                            "#111827",
+                          marginBottom:
+                            "10px",
+                        }}
+                      >
+                        {item.name}
+                      </h2>
 
-                        <p
-                          style={{
-                            color:
-                              "#16a34a",
-                            fontWeight:
-                              "700",
-                            fontSize:
-                              "15px",
-                          }}
-                        >
-                          ₹
-                          {
-                            item.price
-                          }
-                          /kg
-                        </p>
+                      <p
+                        style={{
+                          color:
+                            "#6b7280",
+                          fontSize:
+                            "15px",
+                          marginBottom:
+                            "20px",
+                          lineHeight:
+                            "1.8",
+                        }}
+                      >
+                        Fresh campus-grown
+                        vegetables harvested
+                        sustainably.
+                      </p>
 
+                      {/* PRICE + QUANTITY */}
+                      <div
+                        style={{
+                          display:
+                            "flex",
+                          justifyContent:
+                            "space-between",
+                          alignItems:
+                            isMobile
+                              ? "flex-start"
+                              : "center",
+                          flexDirection:
+                            isMobile
+                              ? "column"
+                              : "row",
+                          gap: "20px",
+                        }}
+                      >
+                        {/* PRICE */}
+                        <div>
+                          <h3
+                            style={{
+                              fontSize:
+                                "32px",
+                              fontWeight:
+                                "900",
+                              color:
+                                "#166534",
+                            }}
+                          >
+                            ₹
+                            {
+                              totalPrice
+                            }
+                          </h3>
+
+                          <p
+                            style={{
+                              color:
+                                "#6b7280",
+                              marginTop:
+                                "4px",
+                              fontSize:
+                                "14px",
+                            }}
+                          >
+                            ₹{price} / kg
+                          </p>
+                        </div>
+
+                        {/* QUANTITY CONTROLS */}
                         <div
                           style={{
-                            marginTop:
-                              "8px",
-                            backgroundColor:
-                              "#f0fdf4",
-                            color:
-                              "#166534",
-                            padding:
-                              "5px 10px",
-                            borderRadius:
-                              "999px",
-                            fontSize:
-                              "12px",
-                            fontWeight:
-                              "700",
                             display:
-                              "inline-block",
+                              "flex",
+                            alignItems:
+                              "center",
+                            gap: "14px",
+                            backgroundColor:
+                              "#f3f4f6",
+                            padding:
+                              "10px 14px",
+                            borderRadius:
+                              "18px",
                           }}
                         >
-                          Organic Fresh
+                          <button
+                            onClick={() =>
+                              decreaseQuantity(
+                                index
+                              )
+                            }
+                            style={{
+                              width:
+                                "44px",
+                              height:
+                                "44px",
+                              borderRadius:
+                                "14px",
+                              border:
+                                "none",
+                              backgroundColor:
+                                "white",
+                              fontSize:
+                                "22px",
+                              fontWeight:
+                                "900",
+                              cursor:
+                                "pointer",
+                            }}
+                          >
+                            −
+                          </button>
+
+                          <div
+                            style={{
+                              minWidth:
+                                "40px",
+                              textAlign:
+                                "center",
+                              fontWeight:
+                                "900",
+                              fontSize:
+                                "18px",
+                            }}
+                          >
+                            {
+                              item.quantity
+                            }
+                          </div>
+
+                          <button
+                            onClick={() =>
+                              increaseQuantity(
+                                index
+                              )
+                            }
+                            style={{
+                              width:
+                                "44px",
+                              height:
+                                "44px",
+                              borderRadius:
+                                "14px",
+                              border:
+                                "none",
+                              background:
+                                "linear-gradient(135deg,#166534,#22c55e)",
+                              color:
+                                "white",
+                              fontSize:
+                                "22px",
+                              fontWeight:
+                                "900",
+                              cursor:
+                                "pointer",
+                            }}
+                          >
+                            +
+                          </button>
                         </div>
                       </div>
                     </div>
 
-                    {/* QUANTITY */}
-                    <div
-                      style={{
-                        textAlign:
-                          "center",
-                        minWidth:
-                          "90px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize:
-                            "13px",
-                          color:
-                            "#9ca3af",
-                          marginBottom:
-                            "5px",
-                        }}
-                      >
-                        Quantity
-                      </p>
-
-                      <div
-                        style={{
-                          fontWeight:
-                            "700",
-                          color:
-                            "#111827",
-                          fontSize:
-                            "16px",
-                        }}
-                      >
-                        {
-                          item.quantity
-                        }{" "}
-                        kg
-                      </div>
-                    </div>
-
-                    {/* TOTAL */}
-                    <div
-                      style={{
-                        textAlign:
-                          "center",
-                        minWidth:
-                          "100px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize:
-                            "13px",
-                          color:
-                            "#9ca3af",
-                          marginBottom:
-                            "5px",
-                        }}
-                      >
-                        Total
-                      </p>
-
-                      <div
-                        style={{
-                          fontWeight:
-                            "800",
-                          color:
-                            "#15803d",
-                          fontSize:
-                            "20px",
-                        }}
-                      >
-                        ₹
-                        {price *
-                          item.quantity}
-                      </div>
-                    </div>
-
-                    {/* REMOVE BUTTON */}
+                    {/* REMOVE */}
                     <button
                       onClick={() =>
                         removeFromCart(
@@ -356,25 +547,28 @@ export default function CartPage({
                         )
                       }
                       style={{
-                        background:
-                          "linear-gradient(to right,#ef4444,#dc2626)",
+                        backgroundColor:
+                          "#fee2e2",
                         color:
-                          "white",
-                        border:
-                          "none",
-                        padding:
-                          "12px 18px",
+                          "#dc2626",
+                        border: "none",
+                        width: "58px",
+                        height: "58px",
                         borderRadius:
-                          "14px",
-                        fontWeight:
-                          "700",
+                          "18px",
+                        fontSize:
+                          "24px",
                         cursor:
                           "pointer",
-                        boxShadow:
-                          "0 8px 18px rgba(239,68,68,0.22)",
+                        fontWeight:
+                          "900",
+                        alignSelf:
+                          isMobile
+                            ? "flex-end"
+                            : "center",
                       }}
                     >
-                      Remove
+                      ×
                     </button>
                   </div>
                 );
@@ -382,23 +576,25 @@ export default function CartPage({
             )}
           </div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT */}
           <div
             style={{
               backgroundColor:
                 "white",
-              borderRadius: "28px",
-              padding: "30px",
+              borderRadius: "32px",
+              padding: "32px",
               boxShadow:
-                "0 12px 35px rgba(0,0,0,0.05)",
-              position: "sticky",
-              top: "100px",
+                "0 16px 40px rgba(0,0,0,0.05)",
+              position: isMobile
+                ? "relative"
+                : "sticky",
+              top: "110px",
             }}
           >
             <h2
               style={{
-                fontSize: "32px",
-                fontWeight: "800",
+                fontSize: "34px",
+                fontWeight: "900",
                 color: "#111827",
                 marginBottom: "28px",
               }}
@@ -406,22 +602,24 @@ export default function CartPage({
               Order Summary
             </h2>
 
-            {/* SUMMARY */}
             <div
               style={{
                 display: "flex",
                 justifyContent:
                   "space-between",
-                marginBottom:
-                  "18px",
+                marginBottom: "18px",
                 color: "#374151",
-                fontSize: "15px",
+                fontSize: "17px",
               }}
             >
-              <span>Subtotal</span>
+              <span>Total Items</span>
 
-              <span>
-                ₹ {getTotal()}
+              <span
+                style={{
+                  fontWeight: "800",
+                }}
+              >
+                {cart.length}
               </span>
             </div>
 
@@ -430,48 +628,66 @@ export default function CartPage({
                 display: "flex",
                 justifyContent:
                   "space-between",
-                marginBottom:
-                  "18px",
+                marginBottom: "18px",
                 color: "#374151",
-                fontSize: "15px",
+                fontSize: "17px",
               }}
             >
-              <span>Delivery Fee</span>
+              <span>Delivery</span>
 
               <span
                 style={{
                   color: "#16a34a",
-                  fontWeight:
-                    "700",
+                  fontWeight: "900",
                 }}
               >
                 FREE
               </span>
             </div>
 
+            {/* PAYMENT INFO */}
             <div
               style={{
-                display: "flex",
-                justifyContent:
-                  "space-between",
-                marginBottom:
+                backgroundColor:
+                  "#f0fdf4",
+                border:
+                  "1px solid #bbf7d0",
+                borderRadius:
                   "18px",
-                color: "#374151",
-                fontSize: "15px",
+                padding: "18px",
+                marginTop: "24px",
+                marginBottom: "24px",
               }}
             >
-              <span>Packaging</span>
+              <h3
+                style={{
+                  color: "#166534",
+                  fontSize: "18px",
+                  fontWeight: "900",
+                  marginBottom: "10px",
+                }}
+              >
+                💳 Online Payment Only
+              </h3>
 
-              <span>₹0</span>
+              <p
+                style={{
+                  color: "#15803d",
+                  lineHeight: "1.7",
+                  fontSize: "14px",
+                }}
+              >
+                Cash on Delivery is not
+                available. Secure online
+                payment only.
+              </p>
             </div>
 
             <hr
               style={{
                 margin:
-                  "24px 0",
+                  "28px 0",
                 border:
-                  "none",
-                borderTop:
                   "1px solid #e5e7eb",
               }}
             />
@@ -484,158 +700,51 @@ export default function CartPage({
                   "space-between",
                 alignItems:
                   "center",
-                marginBottom:
-                  "30px",
+                marginBottom: "30px",
               }}
             >
               <span
                 style={{
-                  fontSize: "18px",
-                  fontWeight:
-                    "700",
-                  color:
-                    "#111827",
+                  fontSize: "24px",
+                  fontWeight: "900",
+                  color: "#111827",
                 }}
               >
-                Total Amount
+                Total
               </span>
 
               <span
                 style={{
-                  fontSize: "34px",
-                  fontWeight:
-                    "800",
-                  color:
-                    "#15803d",
+                  fontSize: "38px",
+                  fontWeight: "900",
+                  color: "#166534",
                 }}
               >
-                ₹ {getTotal()}
+                ₹{getTotal()}
               </span>
             </div>
 
-            {/* CHECKOUT BUTTON */}
+            {/* CHECKOUT */}
             <button
-              onClick={
-                placeOrder
-              }
+              onClick={placeOrder}
               style={{
                 width: "100%",
                 background:
-                  "linear-gradient(135deg,#16a34a,#22c55e)",
+                  "linear-gradient(135deg,#166534,#22c55e)",
                 color: "white",
                 border: "none",
-                padding:
-                  "18px",
-                borderRadius:
-                  "16px",
-                fontWeight:
-                  "800",
-                fontSize:
-                  "16px",
-                cursor:
-                  "pointer",
-                boxShadow:
-                  "0 10px 22px rgba(34,197,94,0.3)",
-                marginBottom:
-                  "24px",
-              }}
-            >
-              Proceed To Checkout →
-            </button>
-
-            {/* EXTRA INFO */}
-            <div
-              style={{
-                background:
-                  "linear-gradient(135deg,#f0fdf4,#dcfce7)",
-                border:
-                  "1px solid #bbf7d0",
-                borderRadius:
-                  "18px",
-                padding: "20px",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "17px",
-                  fontWeight:
-                    "800",
-                  color:
-                    "#166534",
-                  marginBottom:
-                    "12px",
-                }}
-              >
-                🌱 Why Campus Krishi?
-              </h3>
-
-              <p
-                style={{
-                  color: "#166534",
-                  fontSize: "14px",
-                  lineHeight: "1.8",
-                }}
-              >
-                Freshly harvested,
-                chemical-free vegetables
-                grown sustainably by
-                students using
-                eco-friendly farming
-                practices.
-              </p>
-            </div>
-
-            {/* CONTACT */}
-            <div
-              style={{
-                marginTop: "20px",
-                backgroundColor:
-                  "#f9fafb",
-                borderRadius:
-                  "18px",
                 padding: "18px",
-                border:
-                  "1px solid #e5e7eb",
+                borderRadius:
+                  "20px",
+                fontSize: "17px",
+                fontWeight: "900",
+                cursor: "pointer",
+                boxShadow:
+                  "0 14px 28px rgba(34,197,94,0.25)",
               }}
             >
-              <h3
-                style={{
-                  fontSize: "16px",
-                  fontWeight:
-                    "700",
-                  color:
-                    "#111827",
-                  marginBottom:
-                    "10px",
-                }}
-              >
-                📞 Cash On Delivery
-              </h3>
-
-              <p
-                style={{
-                  color: "#6b7280",
-                  fontSize: "14px",
-                  lineHeight: "1.7",
-                }}
-              >
-                Payment will be collected
-                during delivery.
-                <br />
-                Support Number:
-                <br />
-                <span
-                  style={{
-                    color:
-                      "#15803d",
-                    fontWeight:
-                      "700",
-                  }}
-                >
-                  7349784480
-                </span>
-              </p>
-            </div>
+              🌱 Proceed To Checkout
+            </button>
           </div>
         </div>
       )}

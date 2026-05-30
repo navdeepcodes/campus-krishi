@@ -42,12 +42,6 @@ export default function HomePage() {
   const [showAdminLogin, setShowAdminLogin] =
     useState(false);
 
-  const [adminUsername, setAdminUsername] =
-    useState("");
-
-  const [adminPassword, setAdminPassword] =
-    useState("");
-
   const isMobile =
     typeof window !== "undefined" &&
     window.innerWidth < 768;
@@ -942,8 +936,8 @@ export default function HomePage() {
             inset: 0,
             background: "rgba(0,0,0,0.6)",
             display: "flex",
-            justifyContent: "center",
             alignItems: "center",
+            justifyContent: "center",
             zIndex: 9999,
           }}
         >
@@ -956,64 +950,52 @@ export default function HomePage() {
               maxWidth: "420px",
             }}
           >
-            <h2 style={{marginBottom:"20px"}}>
-              👑 Admin Login
-            </h2>
-
-            <input
-              placeholder="Username"
-              value={adminUsername}
-              onChange={(e)=>setAdminUsername(e.target.value)}
-              style={{
-                width:"100%",
-                padding:"14px",
-                marginBottom:"12px",
-                border:"1px solid #ddd",
-                borderRadius:"12px",
-                boxSizing:"border-box",
-              }}
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={adminPassword}
-              onChange={(e)=>setAdminPassword(e.target.value)}
-              style={{
-                width:"100%",
-                padding:"14px",
-                marginBottom:"18px",
-                border:"1px solid #ddd",
-                borderRadius:"12px",
-                boxSizing:"border-box",
-              }}
-            />
+            <h2>👑 Admin Login</h2>
 
             <button
               onClick={() => {
+                const username =
+                  prompt("Admin Username");
+                const password =
+                  prompt("Admin Password");
+
                 if (
-                  adminUsername === "krishi" &&
-                  adminPassword === "sumaraj@29117"
+                  username === "krishi" &&
+                  password === "sumaraj@29117"
                 ) {
-                  setCurrentPage("admin");
                   setShowAdminLogin(false);
+                  setCurrentPage("admin");
                 } else {
                   alert(
-                    "Invalid username or password"
+                    "Invalid admin credentials"
                   );
                 }
               }}
               style={{
-                width:"100%",
-                padding:"14px",
-                border:"none",
-                borderRadius:"12px",
-                background:"#166534",
-                color:"white",
-                fontWeight:"800",
+                width: "100%",
+                padding: "16px",
+                borderRadius: "12px",
+                border: "none",
+                background: "#111827",
+                color: "white",
+                cursor: "pointer",
               }}
             >
-              Login
+              Login as Admin
+            </button>
+
+            <button
+              onClick={() =>
+                setShowAdminLogin(false)
+              }
+              style={{
+                width: "100%",
+                marginTop: "12px",
+                padding: "16px",
+                borderRadius: "12px",
+              }}
+            >
+              Cancel
             </button>
           </div>
         </div>

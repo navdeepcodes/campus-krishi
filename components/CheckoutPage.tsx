@@ -1,5 +1,7 @@
 "use client";
 
+import { supabase } from "../lib/supabase";
+
 
 export default function CheckoutPage({
   cart,
@@ -15,7 +17,7 @@ export default function CheckoutPage({
     typeof window !== "undefined" &&
     window.innerWidth < 768;
 
-  function placeFinalOrder() {
+  async function placeFinalOrder() {
     const customerName =
       (
         document.getElementById(

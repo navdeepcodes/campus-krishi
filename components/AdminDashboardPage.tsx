@@ -12,7 +12,7 @@ export default function AdminDashboardPage({
 }: any) {
   /* LOGIN STATE */
   const [isLoggedIn, setIsLoggedIn] =
-    useState(true);
+    useState(false);
 
   const [username, setUsername] =
     useState("");
@@ -37,19 +37,51 @@ export default function AdminDashboardPage({
     useState<any[]>(orders || []);
 
   useEffect(() => {
-    const stored =
-      localStorage.getItem("orders");
+    async function fetchOrders() {
+      const { data } = await supabase
+        .from("orders")
+        .select("*")
+        .order("created_at", {
+          ascending: false,
+        });
 
-    if (stored) {
-      setLiveOrders(
-        JSON.parse(stored)
-      );
+      if (data) {
+        setLiveOrders(data);
+      }
     }
+
+    fetchOrders();
+
+    const channel = supabase
+      .channel("orders-realtime")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "orders",
+        },
+        () => fetchOrders()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.innerWidth < 768;
+  const [isMobile, setIsMobile] =
+    useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   /* LOGIN FUNCTION */
   function handleLogin() {

@@ -45,9 +45,25 @@ export default function HomePage() {
   const [adminAuthenticated, setAdminAuthenticated] =
     useState(false);
 
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.innerWidth < 768;
+  const [isMobile, setIsMobile] =
+    useState(false);
+
+  useEffect(() => {
+    const handleResize = () =>
+      setIsMobile(window.innerWidth < 768);
+
+    handleResize();
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+  }, []);
 
   const adminEmails = [
     "navdeeptrox@gmail.com",
@@ -93,27 +109,50 @@ export default function HomePage() {
   }
 
   function addToCart(product: any) {
-    const existingIndex = cart.findIndex(
-      (item) => item.id === product.id
-    );
+    const quantityToAdd =
+      Number(product?.quantity) || 1;
 
-    if (existingIndex !== -1) {
-      const updatedCart = [...cart];
+    setCart((prevCart) => {
+      const existingIndex =
+        prevCart.findIndex(
+          (item) =>
+            (
+              item?.id != null &&
+              product?.id != null &&
+              String(item.id) ===
+                String(product.id)
+            ) ||
+            (
+              item?.name &&
+              product?.name &&
+              item.name ===
+                product.name
+            )
+        );
 
-      updatedCart[existingIndex].quantity +=
-        product.quantity || 1;
+      if (existingIndex >= 0) {
+        const updatedCart = [...prevCart];
 
-      setCart(updatedCart);
-    } else {
-      setCart([
-        ...cart,
+        updatedCart[existingIndex] = {
+          ...updatedCart[existingIndex],
+          quantity:
+            Number(
+              updatedCart[existingIndex]
+                .quantity || 0
+            ) + quantityToAdd,
+        };
+
+        return updatedCart;
+      }
+
+      return [
+        ...prevCart,
         {
           ...product,
-          quantity:
-            product.quantity || 1,
+          quantity: quantityToAdd,
         },
-      ]);
-    }
+      ];
+    });
   }
 
   function removeFromCart(index: number) {

@@ -33,9 +33,14 @@ export default function CartPage() {
   }
 
   function removeItem(index: number) {
+    const target = cart[index];
+
     const updated = cart.filter(
-      (_: any, i: number) =>
-        i !== index
+      (item: any, i: number) =>
+        target?.id != null
+          ? String(item.id) !==
+            String(target.id)
+          : i !== index
     );
 
     updateCart(updated);
@@ -44,7 +49,15 @@ export default function CartPage() {
   function increaseQuantity(index: number) {
     const updated = [...cart];
 
-    updated[index].quantity += 1;
+    if (!updated[index]) return;
+
+    updated[index] = {
+      ...updated[index],
+      quantity:
+        Number(
+          updated[index].quantity
+        ) + 1,
+    };
 
     updateCart(updated);
   }
@@ -52,8 +65,20 @@ export default function CartPage() {
   function decreaseQuantity(index: number) {
     const updated = [...cart];
 
-    if (updated[index].quantity > 1) {
-      updated[index].quantity -= 1;
+    if (!updated[index]) return;
+
+    if (
+      Number(
+        updated[index].quantity
+      ) > 1
+    ) {
+      updated[index] = {
+        ...updated[index],
+        quantity:
+          Number(
+            updated[index].quantity
+          ) - 1,
+      };
 
       updateCart(updated);
     }

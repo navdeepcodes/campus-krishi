@@ -12,7 +12,7 @@ export default function AdminDashboardPage({
 }: any) {
   /* LOGIN STATE */
   const [isLoggedIn, setIsLoggedIn] =
-    useState(false);
+    useState(true);
 
   const [username, setUsername] =
     useState("");

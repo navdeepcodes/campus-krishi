@@ -444,31 +444,6 @@ export default function HomePage() {
                   Learn Process
                 </button>
 
-                {!isAdmin && (
-                  <button
-                    onClick={() =>
-                      setShowAdminLogin(true)
-                    }
-                    style={{
-                      background:
-                        "linear-gradient(135deg,#111827,#374151)",
-                      color: "white",
-                      border: "none",
-                      padding:
-                        "18px 30px",
-                      borderRadius:
-                        "18px",
-                      fontWeight: "900",
-                      cursor: "pointer",
-                      fontSize: "15px",
-                      boxShadow:
-                        "0 12px 28px rgba(0,0,0,0.2)",
-                    }}
-                  >
-                    👑 Admin Login
-                  </button>
-                )}
-
                 {(isAdmin || adminAuthenticated) && (
                   <button
                     onClick={() =>
@@ -490,7 +465,7 @@ export default function HomePage() {
                       fontSize: "15px",
                     }}
                   >
-                    👑 Dashboard
+                    👑 Admin Dashboard
                   </button>
                 )}
               </div>

@@ -42,6 +42,9 @@ export default function HomePage() {
   const [showAdminLogin, setShowAdminLogin] =
     useState(false);
 
+  const [adminAuthenticated, setAdminAuthenticated] =
+    useState(false);
+
   const isMobile =
     typeof window !== "undefined" &&
     window.innerWidth < 768;
@@ -53,6 +56,9 @@ export default function HomePage() {
   useEffect(() => {
     checkUser();
     fetchProducts();
+
+    const saved = localStorage.getItem("adminAuthenticated");
+    if (saved === "true") setAdminAuthenticated(true);
   }, []);
 
   async function checkUser() {
@@ -424,7 +430,7 @@ export default function HomePage() {
                   </button>
                 )}
 
-                {isAdmin && (
+                {(isAdmin || adminAuthenticated) && (
                   <button
                     onClick={() =>
                       setCurrentPage(
@@ -908,7 +914,7 @@ export default function HomePage() {
 
       {/* ADMIN */}
       {currentPage === "admin" &&
-        isAdmin && (
+        (isAdmin || adminAuthenticated) && (
           <AdminDashboardPage
             products={products}
             orders={orders}
@@ -963,6 +969,8 @@ export default function HomePage() {
                   username === "krishi" &&
                   password === "sumaraj@29117"
                 ) {
+                  setAdminAuthenticated(true);
+                  localStorage.setItem("adminAuthenticated","true");
                   setShowAdminLogin(false);
                   setCurrentPage("admin");
                 } else {

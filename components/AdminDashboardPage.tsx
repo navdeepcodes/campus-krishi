@@ -633,13 +633,18 @@ export default function AdminDashboardPage({
 
         {/* IMAGE */}
         <input
+          id="product-image-upload"
           type="file"
-          accept="image/*"
-          onChange={(e: any) =>
-            setImageFile(
-              e.target.files[0]
-            )
-          }
+          accept="image/*,.jpg,.jpeg,.png,.webp"
+          capture={undefined}
+          onChange={(e: any) => {
+            const file =
+              e?.target?.files?.[0];
+
+            if (!file) return;
+
+            setImageFile(file);
+          }}
           style={{
             width: "100%",
             padding: "16px",
@@ -649,6 +654,7 @@ export default function AdminDashboardPage({
             backgroundColor:
               "#f9fafb",
             marginBottom: "24px",
+            cursor: "pointer",
           }}
         />
 

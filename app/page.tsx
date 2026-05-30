@@ -974,79 +974,8 @@ export default function HomePage() {
             }
           />
         )}
-      {showAdminLogin && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.6)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999,
-          }}
-        >
-          <div
-            style={{
-              background: "white",
-              padding: "32px",
-              borderRadius: "24px",
-              width: "90%",
-              maxWidth: "420px",
-            }}
-          >
-            <h2>👑 Admin Login</h2>
 
-            <button
-              onClick={() => {
-                const username =
-                  prompt("Admin Username");
-                const password =
-                  prompt("Admin Password");
 
-                if (
-                  username === "krishi" &&
-                  password === "sumaraj@29117"
-                ) {
-                  setAdminAuthenticated(true);
-                  localStorage.setItem("adminAuthenticated","true");
-                  setShowAdminLogin(false);
-                  setCurrentPage("admin");
-                } else {
-                  alert(
-                    "Invalid admin credentials"
-                  );
-                }
-              }}
-              style={{
-                width: "100%",
-                padding: "16px",
-                borderRadius: "12px",
-                border: "none",
-                background: "#111827",
-                color: "white",
-                cursor: "pointer",
-              }}
-            >
-              Login as Admin
-            </button>
-
-            <button
-              onClick={() =>
-                setShowAdminLogin(false)
-              }
-              style={{
-                width: "100%",
-                marginTop: "12px",
-                padding: "16px",
-                borderRadius: "12px",
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
 
     </div>
   );

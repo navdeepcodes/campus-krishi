@@ -13,6 +13,15 @@ import AdminDashboardPage from "../components/AdminDashboardPage";
 import CheckoutPage from "../components/CheckoutPage";
 import CartPage from "../components/CartPage";
 
+
+const CAMPUS_KRISHI_CONTACTS = [
+  { name: "Byre Gowda", phone: "7483012221" },
+  { name: "Vishwadeep", phone: "8310936506" },
+];
+
+const INSTAGRAM_URL =
+  "https://www.instagram.com/bhooswarga_nmit?igsh=MTh0OGZweHB4cDM2MQ==";
+
 export default function HomePage() {
   const [user, setUser] =
     useState<any>(null);
@@ -502,31 +511,7 @@ export default function HomePage() {
                 />
               </div>
 
-              <div
-                style={{
-                  background: "white",
-                  padding: "16px 24px",
-                  borderRadius: "18px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                }}
-              >
-                <Image
-                  src="/nmitlogo.png"
-                  alt="NMIT Logo"
-                  width={60}
-                  height={60}
-                />
-                <div
-                  style={{
-                    color: "#111827",
-                    fontWeight: "800",
-                  }}
-                >
-                  NITTE Meenakshi Institute
-                </div>
-              </div>
+
             </div>
           </div>
 
@@ -862,6 +847,75 @@ export default function HomePage() {
                       📍 NMIT Campus,
                       Bengaluru
                     </a>
+
+                    <div
+                      style={{
+                        marginTop: "18px",
+                        padding: "18px",
+                        borderRadius: "18px",
+                        background:
+                          "rgba(255,255,255,0.08)",
+                      }}
+                    >
+                      <div style={{fontWeight:"700",marginBottom:"10px"}}>
+                        Student Coordinators
+                      </div>
+
+                      <a
+                        href="tel:7483012221"
+                        style={{
+                          display:"block",
+                          color:"rgba(255,255,255,0.9)",
+                          textDecoration:"none",
+                          marginBottom:"8px",
+                        }}
+                      >
+                        👨‍🌾 Byre Gowda — 7483012221
+                      </a>
+
+                      <a
+                        href="tel:8310936506"
+                        style={{
+                          display:"block",
+                          color:"rgba(255,255,255,0.9)",
+                          textDecoration:"none",
+                        }}
+                      >
+                        👨‍🌾 Vishwadeep — 8310936506
+                      </a>
+
+                      <div style={{display:"flex",gap:"12px",marginTop:"16px",flexWrap:"wrap"}}>
+                        <a
+                          href="https://www.instagram.com/bhooswarga_nmit?igsh=MTh0OGZweHB4cDM2MQ=="
+                          target="_blank"
+                          style={{
+                            background:"#E1306C",
+                            color:"white",
+                            textDecoration:"none",
+                            padding:"10px 16px",
+                            borderRadius:"12px",
+                            fontWeight:"700",
+                          }}
+                        >
+                          📸 Instagram
+                        </a>
+
+                        <a
+                          href="https://chat.whatsapp.com/CXKfY24EmvH1KTnTRd0EZM"
+                          target="_blank"
+                          style={{
+                            background:"#25D366",
+                            color:"white",
+                            textDecoration:"none",
+                            padding:"10px 16px",
+                            borderRadius:"12px",
+                            fontWeight:"700",
+                          }}
+                        >
+                          💬 WhatsApp Community
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

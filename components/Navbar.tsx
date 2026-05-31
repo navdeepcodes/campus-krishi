@@ -122,6 +122,30 @@ export default function Navbar({
           🌱
         </div>
 
+        <div
+          style={{
+            width: isMobile ? "72px" : "110px",
+            height: isMobile ? "72px" : "110px",
+            background: "white",
+            borderRadius: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            border: "1px solid #e5e7eb",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src="/nmit-logo.png"
+            alt="NMIT"
+            style={{
+              width: "98%",
+              height: "98%",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+
         <div>
           <h1
             style={{

@@ -85,7 +85,7 @@ export default function AboutPage() {
         {/* RIGHT IMAGE */}
         <div>
           <img
-            src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=1200&auto=format&fit=crop"
+            src="/bhooswarga.jpeg"
             alt="farm"
             style={{
               width: "100%",
@@ -131,7 +131,7 @@ export default function AboutPage() {
           }}
         >
           <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
+            src="/Sumaraj mam.jpg"
             alt="Dr Sumaraj"
             style={{
               width: "150px",
@@ -210,7 +210,7 @@ export default function AboutPage() {
             }}
           >
             <img
-              src="https://randomuser.me/api/portraits/men/32.jpg"
+              src="/Biregowda.jpg"
               alt="Byre Gowda"
               style={{
                 width: "120px",
@@ -263,7 +263,7 @@ export default function AboutPage() {
             }}
           >
             <img
-              src="https://randomuser.me/api/portraits/men/45.jpg"
+              src="/Vishwadeep.jpg"
               alt="Vishwadeep"
               style={{
                 width: "120px",
@@ -315,7 +315,7 @@ export default function AboutPage() {
             }}
           >
             <img
-              src="https://randomuser.me/api/portraits/men/65.jpg"
+              src="/Abhishek.jpg"
               alt="Abhishek"
               style={{
                 width: "120px",

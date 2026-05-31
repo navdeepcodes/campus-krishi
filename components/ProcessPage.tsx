@@ -1,273 +1,116 @@
 "use client";
 
 export default function ProcessPage() {
+  const steps = [
+    {
+      image: "/image1.jpeg",
+      title: "Campus Farm Development",
+      description:
+        "The Campus Krishi journey begins with developing dedicated cultivation spaces inside NMIT. Students and faculty work together to transform available land into productive agricultural zones.",
+    },
+    {
+      image: "/image2.jpeg",
+      title: "Crop Growth Monitoring",
+      description:
+        "Plants are regularly monitored for health, irrigation requirements, and sustainable growth. This hands-on approach gives students practical agricultural experience.",
+    },
+    {
+      image: "/image3.jpeg",
+      title: "Soil Preparation",
+      description:
+        "Healthy crops start with healthy soil. Land preparation, nutrient management, and field improvements ensure optimal growing conditions.",
+    },
+    {
+      image: "/image4.jpg",
+      title: "Fresh Organic Harvest",
+      description:
+        "Vegetables are harvested at peak freshness and quality before being prepared for distribution to the campus community.",
+    },
+    {
+      image: "/image5.jpg",
+      title: "Sustainable Cultivation",
+      description:
+        "Eco-friendly cultivation practices help maximize yield while reducing environmental impact and encouraging long-term sustainability.",
+    },
+  ];
+
   return (
-    <div
-      style={{
-        padding: "60px 40px",
-        backgroundColor: "#f5f5f5",
-        minHeight: "100vh",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1400px",
-          margin: "0 auto",
-        }}
-      >
-        {/* TITLE */}
-        <h1
-          style={{
-            textAlign: "center",
-            fontSize: "52px",
-            fontWeight: "700",
-            color: "#1f2937",
-            marginBottom: "20px",
-          }}
-        >
-          Our Process 🌱
+    <div style={{ background: "#f8faf8", minHeight: "100vh" }}>
+      <div style={{ maxWidth: "1300px", margin: "0 auto", padding: "70px 24px" }}>
+        <h1 style={{ textAlign: "center", fontSize: "56px", fontWeight: 800, color: "#14532d", marginBottom: "16px" }}>
+          From Soil to Harvest
         </h1>
 
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "18px",
-            color: "#6b7280",
-            maxWidth: "850px",
-            margin: "0 auto 60px auto",
-            lineHeight: "1.8",
-          }}
-        >
-          At Campus Krishi, we combine
-          sustainable farming, student
-          innovation, and environmental
-          responsibility to create a
-          greener future.
+        <p style={{ textAlign: "center", maxWidth: "900px", margin: "0 auto 70px", color: "#4b5563", fontSize: "18px", lineHeight: 1.8 }}>
+          Discover how Campus Krishi transforms ideas into sustainable agriculture through innovation,
+          student participation, and environmentally responsible farming practices.
         </p>
 
-        {/* PROCESS CARDS */}
+        {steps.map((step, index) => (
+          <div
+            key={step.title}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "40px",
+              alignItems: "center",
+              marginBottom: "70px",
+            }}
+          >
+            {index % 2 === 0 ? (
+              <>
+                <img src={step.image} alt={step.title} style={{ width: "100%", borderRadius: "24px", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", objectFit: "cover" }} />
+                <div>
+                  <div style={{ color: "#16a34a", fontWeight: 700, marginBottom: "12px" }}>STEP {index + 1}</div>
+                  <h2 style={{ fontSize: "40px", marginBottom: "18px", color: "#111827" }}>{step.title}</h2>
+                  <p style={{ color: "#4b5563", fontSize: "18px", lineHeight: 1.9 }}>{step.description}</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <div style={{ color: "#16a34a", fontWeight: 700, marginBottom: "12px" }}>STEP {index + 1}</div>
+                  <h2 style={{ fontSize: "40px", marginBottom: "18px", color: "#111827" }}>{step.title}</h2>
+                  <p style={{ color: "#4b5563", fontSize: "18px", lineHeight: 1.9 }}>{step.description}</p>
+                </div>
+                <img src={step.image} alt={step.title} style={{ width: "100%", borderRadius: "24px", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", objectFit: "cover" }} />
+              </>
+            )}
+          </div>
+        ))}
+
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "28px",
-            marginBottom: "60px",
+            position: "relative",
+            borderRadius: "30px",
+            overflow: "hidden",
           }}
         >
-          {/* CARD */}
+          <img
+            src="/bhooswarga.jpeg"
+            alt="Campus Farm"
+            style={{ width: "100%", height: "500px", objectFit: "cover" }}
+          />
           <div
             style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "18px",
-              boxShadow:
-                "0 4px 12px rgba(0,0,0,0.06)",
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2))",
+              display: "flex",
+              alignItems: "flex-end",
+              padding: "50px",
             }}
           >
-            <div
-              style={{
-                fontSize: "54px",
-                marginBottom: "18px",
-              }}
-            >
-              🌿
+            <div>
+              <h2 style={{ color: "white", fontSize: "48px", marginBottom: "16px" }}>
+                Growing a Better Tomorrow
+              </h2>
+              <p style={{ color: "white", maxWidth: "700px", lineHeight: 1.8, fontSize: "18px" }}>
+                Campus Krishi is a living example of how sustainable agriculture, student innovation,
+                and community engagement can create meaningful environmental impact.
+              </p>
             </div>
-
-            <h2
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                marginBottom: "14px",
-                color: "#15803d",
-              }}
-            >
-              Sustainable Farming
-            </h2>
-
-            <p
-              style={{
-                color: "#4b5563",
-                lineHeight: "1.8",
-                fontSize: "16px",
-              }}
-            >
-              We grow vegetables using
-              eco-friendly farming methods,
-              natural fertilizers, and
-              efficient irrigation systems.
-            </p>
           </div>
-
-          {/* CARD */}
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "18px",
-              boxShadow:
-                "0 4px 12px rgba(0,0,0,0.06)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "54px",
-                marginBottom: "18px",
-              }}
-            >
-              🧑‍🎓
-            </div>
-
-            <h2
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                marginBottom: "14px",
-                color: "#15803d",
-              }}
-            >
-              Student Engagement
-            </h2>
-
-            <p
-              style={{
-                color: "#4b5563",
-                lineHeight: "1.8",
-                fontSize: "16px",
-              }}
-            >
-              Students actively participate
-              in cultivation, harvesting,
-              research, and sustainability
-              projects for real-world
-              learning.
-            </p>
-          </div>
-
-          {/* CARD */}
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "18px",
-              boxShadow:
-                "0 4px 12px rgba(0,0,0,0.06)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "54px",
-                marginBottom: "18px",
-              }}
-            >
-              🚜
-            </div>
-
-            <h2
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                marginBottom: "14px",
-                color: "#15803d",
-              }}
-            >
-              Fresh Harvest
-            </h2>
-
-            <p
-              style={{
-                color: "#4b5563",
-                lineHeight: "1.8",
-                fontSize: "16px",
-              }}
-            >
-              Vegetables are harvested fresh
-              every day and supplied directly
-              to customers from the campus
-              farm.
-            </p>
-          </div>
-
-          {/* CARD */}
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "18px",
-              boxShadow:
-                "0 4px 12px rgba(0,0,0,0.06)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "54px",
-                marginBottom: "18px",
-              }}
-            >
-              ♻️
-            </div>
-
-            <h2
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                marginBottom: "14px",
-                color: "#15803d",
-              }}
-            >
-              Eco Responsibility
-            </h2>
-
-            <p
-              style={{
-                color: "#4b5563",
-                lineHeight: "1.8",
-                fontSize: "16px",
-              }}
-            >
-              We focus on waste reduction,
-              composting, water conservation,
-              and green innovation for a
-              sustainable future.
-            </p>
-          </div>
-        </div>
-
-        {/* BOTTOM SECTION */}
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg,#15803d,#22c55e)",
-            padding: "50px",
-            borderRadius: "24px",
-            textAlign: "center",
-            color: "white",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: "42px",
-              fontWeight: "700",
-              marginBottom: "20px",
-            }}
-          >
-            Growing a Better Tomorrow 🌍
-          </h2>
-
-          <p
-            style={{
-              fontSize: "18px",
-              maxWidth: "850px",
-              margin: "0 auto",
-              lineHeight: "1.8",
-            }}
-          >
-            Campus Krishi is more than just
-            farming — it is a movement toward
-            sustainability, innovation, and
-            community-driven environmental
-            impact.
-          </p>
         </div>
       </div>
     </div>

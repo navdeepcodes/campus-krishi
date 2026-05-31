@@ -59,20 +59,36 @@ export default function CheckoutPage({
       return;
     }
 
-    const newOrder = {
-      customerName,
+    const orderPayload = {
+      customer_name: customerName,
       phone,
       email,
+      address,
       feedback,
       items: cart,
       total: getTotal(),
-      address,
-      date: new Date(),
+      status: "Pending",
     };
+
+    const { data, error } =
+      await supabase
+        .from("orders")
+        .insert([orderPayload])
+        .select();
+
+    if (error) {
+      console.error(error);
+
+      alert(
+        "Failed to place order. Please try again."
+      );
+
+      return;
+    }
 
     setOrders([
       ...orders,
-      newOrder,
+      ...(data || []),
     ]);
 
     setCart([]);

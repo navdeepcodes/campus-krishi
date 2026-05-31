@@ -466,7 +466,7 @@ export default function AdminDashboardPage({
           },
         ].map((item, index) => (
           <div
-            key={index}
+            key={item.title ?? index}
             style={{
               backgroundColor:
                 "white",
@@ -530,7 +530,7 @@ export default function AdminDashboardPage({
           liveOrders.map(
             (order: any, index: number) => (
               <div
-                key={index}
+                key={order.id ?? index}
                 style={{
                   border: "1px solid #e5e7eb",
                   padding: "16px",
@@ -538,7 +538,7 @@ export default function AdminDashboardPage({
                   marginBottom: "16px",
                 }}
               >
-                <h3>{order.customerName}</h3>
+                <h3>{order.customer_name}</h3>
                 <p>📞 {order.phone}</p>
                 <p>📧 {order.email}</p>
                 <p>📍 {order.address}</p>

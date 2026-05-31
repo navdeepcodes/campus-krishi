@@ -9,14 +9,14 @@ export default function ProcessPage() {
         "The Campus Krishi journey begins with developing dedicated cultivation spaces inside NMIT. Students and faculty work together to transform available land into productive agricultural zones.",
     },
     {
-      image: "/image2.jpeg",
-      title: "Crop Growth Monitoring",
+      image: "/image3.jpeg",
+      title: "Soil Preparation",
       description:
         "Plants are regularly monitored for health, irrigation requirements, and sustainable growth. This hands-on approach gives students practical agricultural experience.",
     },
     {
-      image: "/image3.jpeg",
-      title: "Soil Preparation",
+      image: "/image2.jpeg",
+      title: "Crop Growth Monitoring",
       description:
         "Healthy crops start with healthy soil. Land preparation, nutrient management, and field improvements ensure optimal growing conditions.",
     },

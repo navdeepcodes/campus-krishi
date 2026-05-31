@@ -492,23 +492,48 @@ export default function HomePage() {
             >
               <div
                 style={{
-                  background: "rgba(255,255,255,0.95)",
-                  padding: "30px",
-                  borderRadius: "32px",
-                  boxShadow:
-                    "0 25px 60px rgba(255,255,255,0.35)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "24px",
                 }}
               >
-                <Image
-                  src="/krishilogo.png"
-                  alt="Campus Krishi Logo"
-                  priority
-                  width={320}
-                  height={320}
+                <div
                   style={{
-                    objectFit: "contain",
+                    background: "rgba(255,255,255,0.95)",
+                    padding: "20px",
+                    borderRadius: "32px",
+                    boxShadow:
+                      "0 25px 60px rgba(255,255,255,0.35)",
                   }}
-                />
+                >
+                  <Image
+                    src="/nmit-logo.png"
+                    alt="NMIT Logo"
+                    width={220}
+                    height={220}
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+
+                <div
+                  style={{
+                    background: "rgba(255,255,255,0.95)",
+                    padding: "20px",
+                    borderRadius: "32px",
+                    boxShadow:
+                      "0 25px 60px rgba(255,255,255,0.35)",
+                  }}
+                >
+                  <Image
+                    src="/krishilogo.png"
+                    alt="Campus Krishi Logo"
+                    priority
+                    width={220}
+                    height={220}
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
               </div>
 
 
@@ -883,6 +908,10 @@ export default function HomePage() {
                       >
                         👨‍🌾 Vishwadeep — 8310936506
                       </a>
+                      <div style={{fontWeight:"700",marginBottom:"10px"}}>
+                        Follow us on:
+                      </div>
+                      
 
                       <div style={{display:"flex",gap:"12px",marginTop:"16px",flexWrap:"wrap"}}>
                         <a

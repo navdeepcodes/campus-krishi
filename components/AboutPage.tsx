@@ -170,14 +170,11 @@ export default function AboutPage() {
               color: "#374151",
             }}
           >
-            Dr. Sumaraj is an Assistant
-            Professor in the Department of
-            Civil Engineering at Nitte
-            Meenakshi Institute of Technology,
-            Bengaluru. She holds an M.Tech
-            from IIT Kharagpur and a PhD from
-            the University of Auckland, New
-            Zealand.
+            Dr. Sumaraj is an Assistant Professor in the Department of Civil Engineering at Nitte Meenakshi Institute of Technology, Bengaluru. She holds an M.Tech from IIT Kharagpur and a PhD from the University of Auckland, New Zealand.
+
+An expert in Environmental Engineering and Sustainable Technologies, her work focuses on translating research into real-world impact through experiential learning and community-driven initiatives.
+
+As the founder and project lead of Bhooswarga, she integrates urban farming, climate resilience, and engineering education to build inclusive, hands-on learning spaces that promote sustainability, well-being, and innovation.
           </p>
         </div>
 

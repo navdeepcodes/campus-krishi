@@ -1010,8 +1010,7 @@ export default function HomePage() {
       )}
 
       {/* ADMIN */}
-      {currentPage === "admin" &&
-        (isAdmin || adminAuthenticated) && (
+      {currentPage === "admin" && (
           <AdminDashboardPage
             products={products}
             orders={orders}

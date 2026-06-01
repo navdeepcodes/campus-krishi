@@ -188,7 +188,8 @@ export default function AdminDashboardPage({
         .upload(fileName, file);
 
     if (error) {
-      console.log(error);
+      console.error("SUPABASE STORAGE ERROR:", error);
+      alert(error.message || JSON.stringify(error));
       return null;
     }
 
@@ -293,6 +294,21 @@ export default function AdminDashboardPage({
 
     window.location.reload();
   }
+
+  
+  async function updateProduct(id:any,current:any){
+    const newPrice = prompt("New price", String(current.price ?? ""));
+    const newStock = prompt("New stock", String(current.stock ?? 0));
+    if(newPrice===null || newStock===null) return;
+    const { error } = await supabase.from("products").update({
+      price:Number(newPrice),
+      stock:Number(newStock),
+    }).eq("id",id);
+    if(error){ alert(error.message); return; }
+    alert("Product updated");
+    window.location.reload();
+  }
+
 
   /* LOGIN SCREEN */
   if (!isLoggedIn) {
@@ -729,6 +745,26 @@ export default function AdminDashboardPage({
             )
           )
         )}
+      </div>
+
+
+      <div style={{backgroundColor:"white",padding:"24px",borderRadius:"24px",marginBottom:"32px"}}>
+        <h2 style={{fontSize:"32px",fontWeight:900,marginBottom:"20px"}}>🥕 Manage Products</h2>
+        <div style={{display:"grid",gap:"16px"}}>
+        {products?.map((product:any)=>(
+          <div key={product.id} style={{border:"1px solid #e5e7eb",padding:"16px",borderRadius:"16px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:"12px",flexWrap:"wrap"}}>
+            <div>
+              <div style={{fontWeight:800}}>{product.name}</div>
+              <div>₹{product.price}/kg</div>
+              <div>Stock: {product.stock ?? 0} kg</div>
+            </div>
+            <div style={{display:"flex",gap:"8px"}}>
+              <button onClick={()=>updateProduct(product.id,product)}>✏️ Edit</button>
+              <button onClick={()=>deleteProduct(product.id)}>🗑 Delete</button>
+            </div>
+          </div>
+        ))}
+        </div>
       </div>
 
       {/* ADD PRODUCT */}

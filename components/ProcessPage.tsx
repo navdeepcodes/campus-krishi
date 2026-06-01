@@ -6,7 +6,7 @@ export default function ProcessPage() {
       image: "/image1.jpeg",
       title: "Campus Farm Development",
       description:
-        "The Campus Krishi journey begins with developing dedicated cultivation spaces inside NMIT. Students and faculty work together to transform available land into productive agricultural zones.",
+        "The Bhoposwarga journey begins with developing dedicated cultivation spaces inside NMIT. Students and faculty work together to transform available land into productive agricultural zones.",
     },
     {
       image: "/image3.jpeg",

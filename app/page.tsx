@@ -261,7 +261,7 @@ export default function HomePage() {
               marginBottom: "12px",
             }}
           >
-            Campus Krishi
+            Bhooswarga
           </h1>
 
           <p
@@ -376,7 +376,7 @@ export default function HomePage() {
                   marginBottom: "30px",
                 }}
               >
-                Campus Krishi
+                Bhooswarga
               </h1>
 
               <p
@@ -531,8 +531,8 @@ export default function HomePage() {
                   }}
                 >
                   <Image
-                    src="/krishilogo.png"
-                    alt="Campus Krishi Logo"
+                    src="/bhooswarga.png"
+                    alt="Bhooswarga Logo"
                     priority
                     width={220}
                     height={220}
@@ -726,7 +726,7 @@ export default function HomePage() {
                       marginBottom: "22px",
                     }}
                   >
-                    🌱 Campus Krishi
+                    🌱 Bhooswarga
                   </h2>
 
                   <p
@@ -966,7 +966,7 @@ export default function HomePage() {
                   fontSize: "16px",
                 }}
               >
-                © 2026 Campus Krishi.
+                © 2026 Bhooswarga.
                 All rights reserved.
               </div>
             </div>

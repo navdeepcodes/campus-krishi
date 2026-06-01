@@ -172,7 +172,7 @@ export default function Navbar({
               marginBottom: "2px",
             }}
           >
-            Campus Krishi
+            Bhooswarga
           </h1>
 
           <p

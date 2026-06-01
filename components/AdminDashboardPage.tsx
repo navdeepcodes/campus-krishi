@@ -27,6 +27,9 @@ export default function AdminDashboardPage({
   const [price, setPrice] =
     useState("");
 
+  const [stock, setStock] =
+    useState("");
+
   const [imageFile, setImageFile] =
     useState<any>(null);
 
@@ -203,6 +206,7 @@ export default function AdminDashboardPage({
     if (
       !name ||
       !price ||
+      !stock ||
       !imageFile
     ) {
       alert("Fill all fields");
@@ -232,6 +236,7 @@ export default function AdminDashboardPage({
         {
           name,
           price,
+          stock: Number(stock),
           image: imageUrl,
         },
       ]);
@@ -625,6 +630,57 @@ export default function AdminDashboardPage({
                 <p>📧 {order.email}</p>
                 <p>📍 {order.address}</p>
                 <p>💬 {order.feedback}</p>
+
+                <div
+                  style={{
+                    background: "#f8fafc",
+                    padding: "12px",
+                    borderRadius: "12px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <strong>
+                    🛒 Ordered Items
+                  </strong>
+
+                  {Array.isArray(order.items) &&
+                  order.items.length > 0 ? (
+                    order.items.map(
+                      (item: any, idx: number) => (
+                        <div
+                          key={idx}
+                          style={{
+                            marginTop: "6px",
+                          }}
+                        >
+                          {item.name ||
+                            item.title ||
+                            item.productName ||
+                            "Product"}
+                          {" - Qty: "}
+                          {item.quantity ||
+                            item.qty ||
+                            item.count ||
+                            1}
+                          {item.unit || " kg"}
+                          {item.price
+                            ? ` • ₹${item.price}`
+                            : ""}
+                        </div>
+                      )
+                    )
+                  ) : (
+                    <div
+                      style={{
+                        marginTop: "6px",
+                      }}
+                    >
+                      No item details available
+                    </div>
+                  )}
+                </div>
+
                 <p>💰 ₹{order.total}</p>
                 <p>
                   Status: {" "}

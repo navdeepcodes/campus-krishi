@@ -813,7 +813,23 @@ export default function AdminDashboardPage({
         </div>
 
         {/* IMAGE */}
-        <input
+        
+          <input
+            type="number"
+            placeholder="Stock (kg)"
+            value={stock}
+            onChange={(e) =>
+              setStock(e.target.value)
+            }
+            style={{
+              width: "100%",
+              padding: "14px",
+              marginBottom: "12px",
+              borderRadius: "12px",
+            }}
+          />
+
+<input
           id="product-image-upload"
           type="file"
           accept="image/*,.jpg,.jpeg,.png,.webp"

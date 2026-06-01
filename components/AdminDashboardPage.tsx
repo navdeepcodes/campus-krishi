@@ -36,6 +36,23 @@ export default function AdminDashboardPage({
   const [liveOrders, setLiveOrders] =
     useState<any[]>(orders || []);
 
+  const deliveredOrders =
+    liveOrders.filter(
+      (o) => o.status === "Delivered"
+    );
+
+  const pendingOrders =
+    liveOrders.filter(
+      (o) => o.status !== "Delivered"
+    );
+
+  const deliveredRevenue =
+    deliveredOrders.reduce(
+      (sum, o) =>
+        sum + Number(o.total || 0),
+      0
+    );
+
   useEffect(() => {
     async function fetchOrders() {
       const { data } = await supabase
@@ -74,6 +91,15 @@ export default function AdminDashboardPage({
     useState(false);
 
   useEffect(() => {
+    const savedAdmin =
+      localStorage.getItem(
+        "adminAuthenticated"
+      ) === "true";
+
+    if (savedAdmin) {
+      setIsLoggedIn(true);
+    }
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -90,6 +116,10 @@ export default function AdminDashboardPage({
       password ===
         "sumaraj@29117"
     ) {
+      localStorage.setItem(
+        "adminAuthenticated",
+        "true"
+      );
       setIsLoggedIn(true);
     } else {
       alert(
@@ -97,6 +127,51 @@ export default function AdminDashboardPage({
       );
     }
   }
+
+  
+  async function updateOrderStatus(
+    orderId: any,
+    status: string
+  ) {
+    const { error } = await supabase
+      .from("orders")
+      .update({ status })
+      .eq("id", orderId);
+
+    if (!error) {
+      setLiveOrders((prev) =>
+        prev.map((o) =>
+          o.id === orderId
+            ? { ...o, status }
+            : o
+        )
+      );
+    }
+  }
+
+  async function deleteOrder(
+    orderId: any
+  ) {
+    const confirmed = window.confirm(
+      "Delete this order permanently?"
+    );
+
+    if (!confirmed) return;
+
+    const { error } = await supabase
+      .from("orders")
+      .delete()
+      .eq("id", orderId);
+
+    if (!error) {
+      setLiveOrders((prev) =>
+        prev.filter(
+          (o) => o.id !== orderId
+        )
+      );
+    }
+  }
+
 
   /* IMAGE UPLOAD */
   async function uploadImage(
@@ -442,7 +517,7 @@ export default function AdminDashboardPage({
           {
             title:
               "Total Revenue",
-            value: `₹${totalRevenue}`,
+            value: `₹${deliveredRevenue}` ,
             color: "#16a34a",
           },
           {
@@ -459,10 +534,17 @@ export default function AdminDashboardPage({
           },
           {
             title:
-              "Customers",
+              "Delivered Orders",
             value:
-              liveOrders.length,
+              deliveredOrders.length,
             color: "#9333ea",
+          },
+          {
+            title:
+              "Pending Orders",
+            value:
+              pendingOrders.length,
+            color: "#dc2626",
           },
         ].map((item, index) => (
           <div
@@ -544,6 +626,49 @@ export default function AdminDashboardPage({
                 <p>📍 {order.address}</p>
                 <p>💬 {order.feedback}</p>
                 <p>💰 ₹{order.total}</p>
+                <p>
+                  Status: {" "}
+                  {order.status || "Pending"}
+                </p>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                    flexWrap: "wrap",
+                    marginTop: "12px",
+                  }}
+                >
+                  <button
+                    onClick={() =>
+                      updateOrderStatus(
+                        order.id,
+                        "Delivered"
+                      )
+                    }
+                  >
+                    ✓ Delivered
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      updateOrderStatus(
+                        order.id,
+                        "Pending"
+                      )
+                    }
+                  >
+                    ⏳ Pending
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      deleteOrder(order.id)
+                    }
+                  >
+                    🗑 Delete
+                  </button>
+                </div>
               </div>
             )
           )

@@ -110,11 +110,16 @@ export default function HomePage() {
   }
 
   async function logout() {
+    localStorage.removeItem(
+      "adminAuthenticated"
+    );
+
     await supabase.auth.signOut();
 
-    alert("Admin logged out");
+    setAdminAuthenticated(false);
+    setCurrentPage("home");
 
-    window.location.reload();
+    alert("Admin logged out");
   }
 
   function addToCart(product: any) {
@@ -453,7 +458,7 @@ export default function HomePage() {
                   Learn Process
                 </button>
 
-                {(isAdmin || adminAuthenticated) && (
+                {adminAuthenticated && (
                   <button
                     onClick={() =>
                       setCurrentPage(

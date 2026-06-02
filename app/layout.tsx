@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Campus Krishi",
+  title: "Bhooswarga",
   description: "Student marketplace",
 };
 

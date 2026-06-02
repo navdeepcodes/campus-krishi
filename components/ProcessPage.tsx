@@ -6,7 +6,7 @@ export default function ProcessPage() {
       image: "/image1.jpeg",
       title: "Campus Farm Development",
       description:
-        "The Bhoposwarga journey begins with developing dedicated cultivation spaces inside NMIT. Students and faculty work together to transform available land into productive agricultural zones.",
+        "The Bhooswarga journey begins with developing dedicated cultivation spaces inside NMIT. Students and faculty work together to transform available land into productive agricultural zones.",
     },
     {
       image: "/image3.jpeg",
@@ -42,7 +42,7 @@ export default function ProcessPage() {
         </h1>
 
         <p style={{ textAlign: "center", maxWidth: "900px", margin: "0 auto 70px", color: "#4b5563", fontSize: "18px", lineHeight: 1.8 }}>
-          Discover how Campus Krishi transforms ideas into sustainable agriculture through innovation,
+          Discover how Bhooswarga transforms ideas into sustainable agriculture through innovation,
           student participation, and environmentally responsible farming practices.
         </p>
 
@@ -106,7 +106,7 @@ export default function ProcessPage() {
                 Growing a Better Tomorrow
               </h2>
               <p style={{ color: "white", maxWidth: "700px", lineHeight: 1.8, fontSize: "18px" }}>
-                Campus Krishi is a living example of how sustainable agriculture, student innovation,
+                Bhooswarga is a living example of how sustainable agriculture, student innovation,
                 and community engagement can create meaningful environmental impact.
               </p>
             </div>

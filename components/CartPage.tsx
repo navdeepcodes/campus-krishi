@@ -153,7 +153,7 @@ export default function CartPage({
               fontSize: "13px",
             }}
           >
-            🌱 About Campus Krishi
+            🌱 About Bhooswarga
           </div>
 
           <h2
@@ -176,7 +176,7 @@ export default function CartPage({
               opacity: 0.95,
             }}
           >
-            Campus Krishi is a
+            Bhooswarga is a
             student-led sustainable
             agriculture initiative
             focused on organic farming,

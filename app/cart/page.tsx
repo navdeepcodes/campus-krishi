@@ -147,7 +147,7 @@ export default function CartPage() {
             }}
           >
             Fresh vegetables directly
-            from Campus Krishi
+            from Bhooswraga
           </p>
         </div>
 
@@ -634,7 +634,7 @@ export default function CartPage() {
                     "10px",
                 }}
               >
-                🌱 Campus Krishi Promise
+                🌱Bhooswarga Promise
               </h3>
 
               <p

@@ -391,7 +391,7 @@ export default function VisionPage() {
                 marginBottom: "18px",
               }}
             >
-              🌱 Campus Krishi
+              🌱 Bhooswarga
             </h2>
 
             <p
@@ -486,7 +486,7 @@ export default function VisionPage() {
             color: "#d1d5db",
           }}
         >
-          © 2024 Campus Krishi. All
+          © 2024 Bhooswarga. All
           rights reserved.
         </p>
       </footer>
